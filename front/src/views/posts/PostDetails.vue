@@ -1,0 +1,163 @@
+<template>
+
+    <div v-if="post">
+
+        <div class="posts">
+            <div class="user">
+                <p v-if="post.user">@ {{ post.user.username }}</p>
+                <p v-else>@ inconnu</p>
+            </div>
+            <div class="post">
+                <p>{{ post.message }}</p>
+            </div>
+        </div>
+        
+        <div class="comments" v-for="comment in comments" :key= comment>
+            <div class="user">
+                <p>@ {{ comment.userId }}</p>
+            </div>
+            <div class="comment">
+                <p>{{ comment.message }}</p>
+            </div>
+        </div>
+
+        <form>
+            <input type="text" v-model="message" placeholder="commentaire...">
+            <button type="button" @click="send(id)">Envoyer</button>
+        </form> 
+    </div>
+
+    <div v-else>
+        <p>loading...</p>
+    </div>
+</template>
+
+<script>
+import axios from 'axios'
+import { mapState } from 'vuex';
+
+export default {
+
+    data () {
+        return {
+            post: null,
+            comments: [],
+            message: null
+        }
+    },
+     mounted () {
+        this.getPost(this.id);
+    },
+    props: ['id'],
+
+    computed: {
+        ...mapState(['user'])
+    },
+
+    methods: {
+
+        getPost(id) {
+            axios.get('http://localhost:3000/api/posts/' + id, {
+                headers: { "Authorization" : `Bearer ${ this.user.token }` }
+            })
+            .then(results => {
+                console.log(results),
+                this.post = results.data.post;
+                this.comments = results.data.post.comments;
+            })
+            .catch(error => console.log(error))
+        },
+
+        send(id) {
+            axios.post('http://localhost:3000/api/comments/' + id,
+            {
+                data: {
+                    comment: this.message,
+                    userId: this.userId
+                }
+            },
+            {
+                headers: { "Authorization" : `Bearer ${ this.token }` }
+            })
+            .then(() => {
+                this.message = null;
+                this.getPost(id);
+            })
+            .catch(error => console.log(error));  
+        }
+    }
+}
+
+</script>
+
+<style lang="scss" scoped>
+
+.posts {
+    display: flex;
+    margin: 3em 0;
+    padding: 1em;
+    .user {
+        flex: 1;
+        p {
+            margin: 0;
+        }
+    }
+    .post {
+      flex: 3;
+      background-color: lightgrey;
+      border-radius: 10px;
+      cursor: pointer;
+      p:nth-child(1) {
+        font-weight: bold;
+      }
+    }
+}
+.comments {
+    display: flex;
+    padding: 1em;
+    margin-bottom: 4em;
+    .user {
+        flex: 1;
+        p {
+            margin: 0;
+        }
+    }
+    .comment {
+      flex: 3;
+      background-color: whitesmoke;
+      border-radius: 10px;
+      cursor: pointer;
+      p:nth-child(1) {
+        font-weight: bold;
+      }
+    }
+}
+
+.icon {
+    width: 3em;
+    height: 3em;
+
+}
+
+form {
+  padding: 1em;
+  border-top: solid 2px lightgrey;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: white;
+  width: -webkit-fill-available;
+  input {
+      margin-right: 2em;
+      padding: .3em 1em;
+      width: 15em;
+      border-radius: 4px;
+      border: 1px solid darkgray;
+      &:focus {
+          outline: none;
+          box-shadow: 0px 0px 5px darkgrey;
+      }
+  }
+}
+</style>
+
