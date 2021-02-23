@@ -16,6 +16,5 @@ const User = db.define('user', {
   engine: 'INNODB'
 });
 
-
-
+User.sync();
 module.exports = User;

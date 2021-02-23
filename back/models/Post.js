@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db    = require('../config/database');
+const User  = require('../models/User');
 
 const Post = db.define('post', {
 
@@ -13,4 +14,8 @@ const Post = db.define('post', {
     engine: 'INNODB'
 });
 
+Post.belongsTo(User, { allowNull: false });
+User.hasMany(Post);
+
+Post.sync({ alter: true});
 module.exports = Post;

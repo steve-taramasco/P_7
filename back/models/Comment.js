@@ -14,4 +14,5 @@ const Comment = db.define('comment', {
     engine: 'INNODB'
 });
 
+Comment.sync();
 module.exports = Comment;

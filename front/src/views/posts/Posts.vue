@@ -14,7 +14,7 @@
             <p>{{ post.message }}</p>
           </router-link>
           <p>
-            <span class="comments">{{ post.comments.length }}</span> commentaires 
+            <!-- <span class="comments" >{{ post.comments.length }}</span> commentaires  -->
             <span class="trash" @click="trashPost(post.id)">suppr.</span>
           </p>
         </div>

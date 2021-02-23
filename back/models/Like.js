@@ -6,12 +6,12 @@ const Like = db.define('like', {
     like: { type: DataTypes.INTEGER, defaultValue: 0 }
 },
 {
-    indexes: [
-        {
-            unique: true,
-            fields: ['postId', 'userId']
-        }
-    ]
+    // indexes: [
+    //     {
+    //         unique: true,
+    //         fields: ['postId', 'userId']
+    //     }
+    // ]
 },
 {
     timestamps: false,
@@ -19,4 +19,5 @@ const Like = db.define('like', {
     engine: 'INNODB'
 });
 
+Like.sync();
 module.exports = Like;
