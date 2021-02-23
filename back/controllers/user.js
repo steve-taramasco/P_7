@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
-const db     = require('../db');
-const dotenv = require('dotenv').config();
+const user   = require('../models/User');
+
+// const dotenv = require('dotenv').config();
 
 
 exports.signup = (req, res, next) => {
@@ -11,7 +12,7 @@ exports.signup = (req, res, next) => {
     }
     bcrypt.hash(req.body.password, 10)
     .then(pass_hash => {
-        db.users.create({ ...req.body, password: pass_hash })
+        user.create({ ...req.body, password: pass_hash })
         .then((user) => res.status(201).json({ user }))
         .catch(error => res.status(500).json({ error }))
     })
@@ -19,7 +20,7 @@ exports.signup = (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
-    db.users.findOne({ where: { email: req.body.email }})
+    user.findOne({ where: { email: req.body.email }})
     .then(user => {
         if(!user) {
             return res.status(401).json({ message: 'Email inconnu !' }); // identifiants incorrects !
@@ -50,25 +51,25 @@ exports.login = (req, res, next) => {
 }
 
 exports.modify = (req, res, next) => {
-    db.users.update({ ...req.body }, { where: { id: req.params.id }})
+    user.update({ ...req.body }, { where: { id: req.params.id }})
     .then((user) => res.status(200).json({ user }))
     .catch(error => res.status(500).json({ error }));
 }
 
 exports.delete = (req, res, next) => {
-    db.users.destroy({ where: { id: req.params.id }})
+    user.destroy({ where: { id: req.params.id }})
     .then(() => res.status(200).json({ message: "l'utilisateur à bien été supprimé !"}))
     .catch(error => res.status(500).json({ error }));
 }
 
 exports.getUser = (req, res, next) => {
-    db.users.findOne({ where: { id: req.params.id }})
+    user.findOne({ where: { id: req.params.id }})
     .then(user => res.status(200).json({ user }))
     .catch(error => res.status(500).json({ error }));
 }
 
 exports.getUsers = (req, res, next) => {
-    db.users.findAll()
+    user.findAll()
     .then(users => res.status(200).json({ users }))
     .catch(error => res.status(500).json({ error }));
 }

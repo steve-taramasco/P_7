@@ -1,40 +1,43 @@
-const db = require('../db');
+const Post    = require('../models/Post');
+const Like    = require('../models/Like');
+const User    = require('../models/User');
+const Comment = require('../models/Comment');
+
 
 exports.createPost = (req, res, next) => {
-    db.posts.create(req.body.data)
+    Post.create(req.body.data)
     .then(post => res.status(201).json({ post }))
     .catch(error => res.status(400).json({ error }));
 };
 
 exports.getPost = (req, res, next) => {
-    db.posts.findOne({ where: { id: req.params.id },
-        include: [db.users, db.comments, db.likes]})
+    Post.findOne({ where: { id: req.params.id }})
     .then(post => res.status(200).json({ post }))
     .catch(error => res.status(404).json({ error }));
 };
 
 exports.deletePost = (req, res, next) => {
-    db.posts.destroy({ where: { id: req.params.id }})
+    Post.destroy({ where: { id: req.params.id }})
     .then(() => res.status(200).json({ message: "le message à été supprimé !"}))
     .catch(error => res.status(400).json({ error }));
 }
 
 exports.getPosts = (req, res, next) => {
-    db.posts.findAll({ include: [ db.users, db.comments, db.likes ]})
+    Post.findAll()
     .then(posts => res.status(200).json({ posts}))
     .catch(error => res.status(400).json({ error }));
 };
 
 exports.postLike = (req, res, next) => {
 
-    db.likes.findOne({ where: { postId: req.params.id, userId: req.body.userId }})
+    Like.findOne({ where: { postId: req.params.id, userId: req.body.userId }})
     .then(like => {
         if(like) {
             like.update({ like: req.body.like })
             .then(modif => res.status(200).json({ modif }))
             .catch(error => res.status(400).json({ error }));
         } else {
-            db.likes.create({
+            Like.create({
                 postId: req.params.id,
                 userId: req.body.userId,
                 like: req.body.like
@@ -47,7 +50,7 @@ exports.postLike = (req, res, next) => {
 }
 
 exports.getLikes = (req, res, next) => {
-    db.likes.findAll({ where: { postId: req.params.id }})
+    Like.findAll({ where: { postId: req.params.id }})
     .then(likes => res.status(200).json({ likes }))
     .catch(error => res.status(404).json({ error }))
 }

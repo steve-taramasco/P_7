@@ -1,14 +1,13 @@
 const { DataTypes } = require('sequelize');
-const sequelize     = require('../connection');
+const db    = require('../config/database');
 
-const Comment = sequelize.define('comment', {
+const Comment = db.define('comment', {
 
     id:      { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
     message: { type: DataTypes.STRING, allowNull: false },
     userId : { type: DataTypes.INTEGER, allowNull: false }
 },
 {
-    sequelize,
     timestamps: true,
     updatedAt: false,
     modelName: 'Comment',

@@ -1,7 +1,9 @@
-const db = require('../db');
+const Comment = require('../models/Comment');
+const User = require('../models/User');
+
 
 exports.createComment = (req, res, next) => {
-    db.comments.create({
+    Comment.create({
             message: req.body.data.comment,
             userId: req.body.data.userId,
             postId: req.params.id
@@ -11,7 +13,7 @@ exports.createComment = (req, res, next) => {
 }
 
 exports.getComments = (req, res, next) => {
-    db.comments.findAll({ where: { postId: req.params.id }, include: db.users })
+    Comment.findAll({ where: { postId: req.params.id }, include: User })
     .then(comments => res.status(200).json({ comments }))
     .catch(error => res.status(500).json({ error }));
 }

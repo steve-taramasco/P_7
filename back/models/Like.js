@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize     = require('../connection');
+const db    = require('../config/database');
 
-const Like = sequelize.define('like', {
+const Like = db.define('like', {
 
     like: { type: DataTypes.INTEGER, defaultValue: 0 }
 },
@@ -14,7 +14,6 @@ const Like = sequelize.define('like', {
     ]
 },
 {
-    sequelize,
     timestamps: false,
     modelName: 'Like',
     engine: 'INNODB'

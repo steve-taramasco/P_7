@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const sequelize     = require('../connection');
+const db    = require('../config/database');
 
-const User = sequelize.define('user', {
+const User = db.define('user', {
   
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
   email: { type: DataTypes.STRING, allowNull: false, unique: true },
@@ -11,7 +11,6 @@ const User = sequelize.define('user', {
   isAdmin: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
 },
 {
-  sequelize,
   timestamps: false,
   modelName: 'User',
   engine: 'INNODB'
