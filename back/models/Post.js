@@ -14,8 +14,10 @@ const Post = db.define('post', {
     engine: 'INNODB'
 });
 
-Post.belongsTo(User, { allowNull: false });
-User.hasMany(Post);
+    // ASSOCIATIONS //
 
-Post.sync({ alter: true});
+Post.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false }});
+User.hasMany(Post, { foreignKey: { name: 'userId', allowNull: false }});
+
+Post.sync();
 module.exports = Post;

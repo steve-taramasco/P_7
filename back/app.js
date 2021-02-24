@@ -4,7 +4,6 @@ const bodyParser    = require('body-parser');
 const helmet        = require('helmet');
 const userRoutes    = require('./routes/user');
 const postRoutes    = require('./routes/post');
-const commentRoutes = require('./routes/comment');
 const db            = require('./config/database');
 
 // Instantiate server
@@ -30,6 +29,5 @@ app.use(helmet());
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/comments', commentRoutes);
 
 module.exports = app;

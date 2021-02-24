@@ -1,11 +1,12 @@
 const { DataTypes } = require('sequelize');
 const db    = require('../config/database');
+const Post = require('./Post');
+const User = require('./User');
 
 const Comment = db.define('comment', {
-
+    
     id:      { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    message: { type: DataTypes.STRING, allowNull: false },
-    userId : { type: DataTypes.INTEGER, allowNull: false }
+    comment: { type: DataTypes.STRING, allowNull: false },
 },
 {
     timestamps: true,
@@ -14,5 +15,13 @@ const Comment = db.define('comment', {
     engine: 'INNODB'
 });
 
-Comment.sync();
+    // ASSOCIATIONS //
+
+Comment.belongsTo(Post, { foreignKey: { name: 'postId', allowNull: false }});
+Post.hasMany(Comment, { foreignKey: { name: 'postId', allowNull: false }});
+
+Comment.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false }});
+User.hasMany(Comment, { foreignKey: { name: 'userId', allowNull: false }});
+
+Comment.sync({ alter: true} );
 module.exports = Comment;

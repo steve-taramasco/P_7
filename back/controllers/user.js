@@ -1,12 +1,12 @@
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const user   = require('../models/User');
-
-// const dotenv = require('dotenv').config();
+require('dotenv').config();
 
 
 exports.signup = (req, res, next) => {
     const email_valid = /^[\w._-]+@[\w._-]+\.[a-z]{2,6}$/i;
+    // const pass_valid = 
     if (!email_valid.test(req.body.email)) {
         return res.status(401).json({ error: 'Email non valide...' });
     }
@@ -39,7 +39,7 @@ exports.login = (req, res, next) => {
                     isAdmin: user.isAdmin,
                     token:
                     jwt.sign({ userId: user.id },
-                    "secret_token",
+                    process.env.USER_TOKEN,
                     { expiresIn: '24h' })
                 },
                 
@@ -52,7 +52,7 @@ exports.login = (req, res, next) => {
 
 exports.modify = (req, res, next) => {
     user.update({ ...req.body }, { where: { id: req.params.id }})
-    .then((user) => res.status(200).json({ user }))
+    .then(() => res.status(200).json({ message: "l'utilisateur à bien été modifié !" }))
     .catch(error => res.status(500).json({ error }));
 }
 

@@ -62,10 +62,8 @@ export default {
     sendPost(message) {
     axios.post('http://localhost:3000/api/posts/',
     {
-      data: {
-        message: message,
-        userId: this.user.id
-      }
+      message: message,
+      userId: this.user.id
     },
     {
       headers: { "Authorization" : `Bearer ${ this.user.token }` }

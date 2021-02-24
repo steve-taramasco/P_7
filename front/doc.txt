@@ -1,0 +1,6 @@
+backend : postId, value, userId
+
+api : ...api/posts/:id/like
+
+payload: value, userId 
+
