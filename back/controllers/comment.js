@@ -1,19 +1,13 @@
-const Comment = require('../models/Comment');
-const User = require('../models/User');
-
+const commentService = require('../services/comment');
 
 exports.createComment = (req, res, next) => {
-    Comment.create({
-            comment: req.body.comment,
-            userId: req.body.userId,
-            postId: req.params.id
-        })
+    commentService.createComment( req.body.comment, req.params.id, req.headers )
     .then(comment => res.status(201).json({ comment }))
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error: error.message }));
 }
 
 exports.getComments = (req, res, next) => {
-    Comment.findAll({ where: { postId: req.params.id }, include: User })
+    commentService.getComments(req.params.id)
     .then(comments => res.status(200).json({ comments }))
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error: error.message }));
 }

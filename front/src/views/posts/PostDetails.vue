@@ -1,23 +1,35 @@
 <template>
 
-    <div v-if="post">
+    <div class="content" v-if="post">
 
         <div class="posts">
             <div class="user">
-                <p v-if="post.user">@ {{ post.user.username }}</p>
+                <img class="icon" src="../../assets/user.png" alt="icon">
+                <p v-if="post.username">@ {{ post.username }}</p>
                 <p v-else>@ inconnu</p>
             </div>
+
             <div class="post">
                 <p>{{ post.message }}</p>
+            </div>
+
+            <div class="time">
+                <p>{{ post.created }}</p>
             </div>
         </div>
         
         <div class="comments" v-for="comment in comments" :key= comment>
             <div class="user">
-                <p>@ {{ comment.userId }}</p>
+                <img class="icon" src="../../assets/user.png" alt="icon">
+                <p>@ {{ comment.username }}</p>
             </div>
+
             <div class="comment">
                 <p>{{ comment.message }}</p>
+            </div>
+
+            <div class="time">
+                <p>{{ comment.created }}</p>
             </div>
         </div>
 
@@ -29,7 +41,12 @@
 
     <div v-else>
         <p>loading...</p>
+        <form>
+            <input type="text" v-model="message" placeholder="commentaire...">
+            <button type="button" @click="send(id)">Envoyer</button>
+        </form> 
     </div>
+
 </template>
 
 <script>
@@ -37,7 +54,6 @@ import axios from 'axios'
 import { mapState } from 'vuex';
 
 export default {
-
     data () {
         return {
             post: null,
@@ -61,7 +77,6 @@ export default {
                 headers: { "Authorization" : `Bearer ${ this.user.token }` }
             })
             .then(results => {
-                console.log(results),
                 this.post = results.data.post;
                 this.comments = results.data.post.comments;
             })
@@ -69,15 +84,12 @@ export default {
         },
 
         send(id) {
-            axios.post('http://localhost:3000/api/comments/' + id,
+            axios.post('http://localhost:3000/api/posts/'+ id +'/comment',
             {
-                data: {
-                    comment: this.message,
-                    userId: this.userId
-                }
+                comment: this.message,
             },
             {
-                headers: { "Authorization" : `Bearer ${ this.token }` }
+                headers: { "Authorization" : `Bearer ${ this.user.token }` }
             })
             .then(() => {
                 this.message = null;
@@ -92,72 +104,76 @@ export default {
 
 <style lang="scss" scoped>
 
-.posts {
-    display: flex;
-    margin: 3em 0;
-    padding: 1em;
-    .user {
-        flex: 1;
-        p {
-            margin: 0;
+.content {
+    margin: 8em 0 5em 0;
+    .posts {
+        display: flex;
+        margin: 1em 0;
+        padding: 1em;
+        .user {
+            flex: 1;
+            p {
+                margin: 0;
+            }
+        }
+        .post {
+            flex: 2;
+            background-color: lightgrey;
+            border-radius: 10px;
+            cursor: pointer;
+            p:nth-child(1) {
+                font-weight: bold;
+            }
         }
     }
-    .post {
-      flex: 3;
-      background-color: lightgrey;
-      border-radius: 10px;
-      cursor: pointer;
-      p:nth-child(1) {
-        font-weight: bold;
-      }
+    .comments {
+        display: flex;
+        padding: 1em;
+        .user {
+            flex: 1;
+            p {
+                margin: 0;
+            }
+        }
+        .comment {
+            flex: 2;
+            background-color: whitesmoke;
+            border-radius: 10px;
+            cursor: pointer;
+            p:nth-child(1) {
+                font-weight: bold;
+            }
+        }
+        
     }
-}
-.comments {
-    display: flex;
-    padding: 1em;
-    margin-bottom: 4em;
-    .user {
-        flex: 1;
-        p {
-            margin: 0;
+
+    form {
+        background-color: #f5f5f5f5;
+        padding: 1em;
+        border-top: solid 2px lightgrey;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: -webkit-fill-available;
+        input {
+            margin-right: 2em;
+            padding: .3em 1em;
+            width: 15em;
+            border-radius: 4px;
+            border: 1px solid darkgray;
+            &:focus {
+                outline: none;
+                box-shadow: 0px 0px 5px darkgrey;
+            }
         }
     }
-    .comment {
-      flex: 3;
-      background-color: whitesmoke;
-      border-radius: 10px;
-      cursor: pointer;
-      p:nth-child(1) {
-        font-weight: bold;
-      }
+    .time {
+        flex: 1;
+    }
+    .icon {
+        width: 2em;
     }
 }
 
-.icon {
-    width: 3em;
-    height: 3em;
-
-}
-
-form {
-  padding: 1em;
-  border-top: solid 2px lightgrey;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: white;
-  width: -webkit-fill-available;
-  input {
-      margin-right: 2em;
-      padding: .3em 1em;
-      width: 15em;
-      border-radius: 4px;
-      border: 1px solid darkgray;
-      &:focus {
-          outline: none;
-          box-shadow: 0px 0px 5px darkgrey;
-      }
-  }
-}
 </style>
 

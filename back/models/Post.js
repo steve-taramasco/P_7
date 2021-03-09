@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
-const db    = require('../config/database');
-const User  = require('../models/User');
+const db            = require('../config/database');
+const User          = require('../models/User');
+const Like          = require('./Like');
 
 const Post = db.define('post', {
 
@@ -16,8 +17,12 @@ const Post = db.define('post', {
 
     // ASSOCIATIONS //
 
-Post.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false }});
-User.hasMany(Post, { foreignKey: { name: 'userId', allowNull: false }});
+Post.belongsTo(User, { foreignKey: { allowNull: false }});
+User.hasMany(Post, { foreignKey: { allowNull: false }});
 
-Post.sync();
+Post.hasMany(Like);
+
+Post.belongsToMany(User, { through: Like });
+User.belongsToMany( Post, { through: Like });
+
 module.exports = Post;

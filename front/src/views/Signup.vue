@@ -42,26 +42,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-h2 {
-  font-weight: normal;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  input {
-    margin: .5em;
-    padding: .3em 1em;
-    width: 15em;
-    border-radius: 4px;
-    border: 1px solid darkgray;
-    &:focus {
-      outline: none;
-      box-shadow: 0px 0px 5px darkgrey;
+.signup {
+    margin-top: 8em;
+  h2 {
+    font-weight: normal;
+  }
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+      margin: .5em;
+      padding: .3em 1em;
+      width: 15em;
+      border-radius: 4px;
+      border: 1px solid darkgray;
+      &:focus {
+        outline: none;
+        box-shadow: 0px 0px 5px darkgrey;
+      }
     }
   }
 }
-
 </style>

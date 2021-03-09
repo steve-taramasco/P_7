@@ -1,41 +1,62 @@
 <template>
 
   <div class="content" v-if="posts">
+
     <div class="posts" v-for="post in posts" :key="post">
 
       <div class="user">
-        <p v-if="post.user">@ {{ post.user.username }}</p>
+        <img class="icon" src="../../assets/user.png" alt="icon">
+        <p v-if="post.username">@ {{ post.username }}</p>
         <p v-else>@ inconnu</p>
       </div>
 
       <div class="post">
         <div class="bulle">
+
           <router-link :to="{ name: 'PostDetails', params: { id: post.id }}">
             <p>{{ post.message }}</p>
           </router-link>
+
           <p>
-            <!-- <span class="comments" >{{ post.comments.length }}</span> commentaires  -->
-            <span class="trash" @click="trashPost(post.id)">suppr.</span>
+            <span class="comments">
+              <img class="icon" src="../../assets/chat.png" alt="icon">
+            </span> {{ post.comments }}
+
+            <span class="like" @click="like(post.id, 1)">
+              <img class="icon" src="../../assets/like.png" alt="icon">
+            </span> {{ post.likes }}
+
+            <span class="dislike" @click="like(post.id, -1)">
+              <img class="icon" src="../../assets/dislike.png" alt="icon">
+            </span> {{ post.dislikes }}
+
+            <span class="trash" @click="trashPost(post.id)">
+              <img class="icon" src="../../assets/remove.png" alt="icon">
+            </span>
           </p>
         </div>
       </div>
 
       <div class="time">
-        <p>{{ post.createdAt }}</p>
+        <p>{{ post.created }}</p>
       </div>
-      
     </div>
+
     <form>
+        <!-- <label for="file" class="label-file"></label> -->
+        <input id="file" class="input-file" type="file" @change="onFileChange">
         <input type="text" v-model="message" placeholder="message...">
-        <button type="button" @click="sendPost(message)">Envoyer</button>
+
+        <button type="button" @click="sendPost">Envoyer</button>
     </form> 
+
   </div>
 
   <div class="loading" v-else>
     <p>loading...</p>
-     <form>
-        <input type="text" v-model="message" placeholder="message...">
-        <button type="button" @click="send">Envoyer</button>
+    <form>
+      <input type="text" v-model="message" placeholder="message...">
+      <button type="button" @click="sendPost(message)">Envoyer</button>
     </form> 
   </div>
 
@@ -48,7 +69,8 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      message: null
+      message: null,
+      file: null
     }
   },
 
@@ -59,17 +81,28 @@ export default {
   methods: {
     ...mapActions(['getPosts']),
 
-    sendPost(message) {
-    axios.post('http://localhost:3000/api/posts/',
-    {
-      message: message,
-      userId: this.user.id
+    onFileChange(e) {
+      let files = e.target.files;
+      if (!files.length) return;
+      this.file = files[0];
     },
+
+    sendPost() {
+    const input = document.getElementById('file');
+    const formData = new FormData();
+
+    formData.append('image', this.file);
+    formData.append('message', this.message);
+
+    axios.post('http://localhost:3000/api/posts/', formData,
     {
       headers: { "Authorization" : `Bearer ${ this.user.token }` }
     })
-    .then(() => { 
+
+    .then(() => {
       this.message = null,
+      this.file = null,
+      input.value = '',
       this.getPosts()
     })
     .catch(error => console.log(error));   
@@ -82,6 +115,18 @@ export default {
     })
     .then(() => this.getPosts())
     .catch(error => console.log(error));
+    },
+
+    like(id, value) {
+      axios.post('http://localhost:3000/api/posts/' + id + '/like',
+      {
+        value: value
+      },
+      {
+        headers: { "Authorization" : `Bearer ${ this.user.token }` }
+      })
+      .then(() => this.getPosts())
+      .catch(error => console.log(error));
     }
   },
   
@@ -92,58 +137,73 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+// .label-file {
+//     cursor: pointer;
+// }
+// .label-file:hover {
+//     color: #25a5c4;
+// }
+
+// .input-file {
+//     display: none;
+// }
+
 .content {
-  margin-bottom: 5em;
-}
-
-.posts {
-  display: flex;
-  margin: 3em 0;
-  .user {
-    flex: 1;
-    margin: 5px;
-    p {
-        margin: 0;
-      }
-    .icon {
-      width: 3em;
-      height: 3em;
-    }
-  }
-  .post {
-    flex: 3;
-    .bulle {
-      background-color: whitesmoke;
-      border-radius: 10px;
+  margin: 8em 0 5em 0;
+  .posts {
+    display: flex;
+    margin: 1em 0;
+    .user {
+      flex: 1;
       margin: 5px;
-      padding: .4em;
-      p:nth-child(1) {
-        font-weight: bold;
-      }
-      a {
-        text-decoration: none;
-        color: inherit;
-      }
-      &:hover {
-        margin: 5px;
-        box-shadow: 0px 0px 10px 1px darkgrey;
+      p {
+          margin: 0;
+        }
+      .icon {
+      width: 2em;
       }
     }
+    .post {
+      flex: 2;
+      .bulle {
+        background-color: whitesmoke;
+        box-shadow: 0px 0px 5px 0px darkgray;
+        border-radius: 10px;
+        margin: 5px;
+        padding: .4em;
+        p:nth-child(1) {
+          font-weight: bold;
+        }
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+        .icon {
+          width: 1em;
+        }
+        &:hover {
+          margin: 5px;
+          box-shadow: 0px 0px 10px 1px darkgrey;
+        }
+      }
+    }
+    .time {
+      flex: 1;  
+    }
   }
-  .time {
-    flex: 1;
-  }
-}
-
-form {
-  padding: 1em;
-  border-top: solid 2px lightgrey;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: white;
-  width: -webkit-fill-available;
-  input {
+  form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5f5;
+    padding: 1em;
+    border-top: solid 2px lightgrey;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: -webkit-fill-available;
+    input {
       margin-right: 2em;
       padding: .3em 1em;
       width: 15em;
@@ -153,6 +213,7 @@ form {
           outline: none;
           box-shadow: 0px 0px 5px darkgrey;
       }
+    }
   }
 }
 

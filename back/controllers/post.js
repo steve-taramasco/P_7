@@ -1,18 +1,16 @@
-const Post    = require('../models/Post');
-const User    = require('../models/User');
-const Comment = require('../models/Comment');
-
+const Post        = require('../models/Post');
+const postService = require('../services/post');
 
 exports.createPost = (req, res, next) => {
-    Post.create(req.body)
+    postService.createPost(req)
     .then(post => res.status(201).json({ post }))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(400).json({ error: error.message }));
 };
 
 exports.getPost = (req, res, next) => {
-    Post.findOne({ where: { id: req.params.id }})
+    postService.getPost(req.params.id)
     .then(post => res.status(200).json({ post }))
-    .catch(error => res.status(404).json({ error }));
+    .catch(error => res.status(404).json({ error: error.message }));
 };
 
 exports.deletePost = (req, res, next) => {
@@ -22,7 +20,7 @@ exports.deletePost = (req, res, next) => {
 }
 
 exports.getPosts = (req, res, next) => {
-    Post.findAll({ include: User })
+    postService.getPosts()
     .then(posts => res.status(200).json({ posts }))
-    .catch(error => res.status(400).json({ error }));
+    .catch(error => res.status(400).json({ error: error.message }));
 };

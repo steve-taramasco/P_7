@@ -1,17 +1,13 @@
 const { DataTypes } = require('sequelize');
-const db    = require('../config/database');
+const db            = require('../config/database');
 
 const Like = db.define('like', {
 
-    like: { type: DataTypes.INTEGER, defaultValue: 0 }
-},
-{
-    // indexes: [
-    //     {
-    //         unique: true,
-    //         fields: ['postId', 'userId']
-    //     }
-    // ]
+    value: {
+        type: DataTypes.ENUM,
+        values: ['-1', '1'],
+        allowNull: false
+    },
 },
 {
     timestamps: false,
@@ -19,5 +15,4 @@ const Like = db.define('like', {
     engine: 'INNODB'
 });
 
-Like.sync();
 module.exports = Like;

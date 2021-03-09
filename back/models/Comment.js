@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const db    = require('../config/database');
-const Post = require('./Post');
-const User = require('./User');
+const db            = require('../config/database');
+const Post          = require('./Post');
+const User          = require('./User');
 
 const Comment = db.define('comment', {
     
@@ -17,11 +17,10 @@ const Comment = db.define('comment', {
 
     // ASSOCIATIONS //
 
-Comment.belongsTo(Post, { foreignKey: { name: 'postId', allowNull: false }});
-Post.hasMany(Comment, { foreignKey: { name: 'postId', allowNull: false }});
+Comment.belongsTo(Post, { foreignKey: { allowNull: false }});
+Post.hasMany(Comment, { foreignKey: { allowNull: false }});
 
-Comment.belongsTo(User, { foreignKey: { name: 'userId', allowNull: false }});
-User.hasMany(Comment, { foreignKey: { name: 'userId', allowNull: false }});
+Comment.belongsTo(User, { foreignKey: { allowNull: false }});
+User.hasMany(Comment, { foreignKey: { allowNull: false }});
 
-Comment.sync({ alter: true} );
 module.exports = Comment;

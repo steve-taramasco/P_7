@@ -1,5 +1,6 @@
 const { DataTypes } = require('sequelize');
-const db    = require('../config/database');
+const db            = require('../config/database');
+const Like = require('./Like');
 
 const User = db.define('user', {
   
@@ -16,5 +17,4 @@ const User = db.define('user', {
   engine: 'INNODB'
 });
 
-User.sync();
 module.exports = User;
