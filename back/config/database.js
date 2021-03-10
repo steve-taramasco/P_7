@@ -13,5 +13,8 @@ const db = new Sequelize( process.env.DB_NAME, process.env.DB_USER, process.env.
     }
 });
 
+
+
+// db.sync({ force: true });
 db.sync();
-module.exports = db;
+module.exports = db; 

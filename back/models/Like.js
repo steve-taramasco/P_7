@@ -7,7 +7,15 @@ const Like = db.define('like', {
         type: DataTypes.ENUM,
         values: ['-1', '1'],
         allowNull: false
-    },
+    }//,
+    // userId: {
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    // },
+    // postId: {
+    //     type: DataTypes.INTEGER,
+    //     primaryKey: true,
+    // },
 },
 {
     timestamps: false,

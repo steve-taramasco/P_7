@@ -33,7 +33,7 @@ export default {
         password: this.password,
         username: this.username
       })
-      .then((res) => this.storeUser(res.data.user))
+      .then((res) => console.log(res))
       .catch(error => console.log(error));   
     }
   }

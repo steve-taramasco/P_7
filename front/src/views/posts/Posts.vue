@@ -43,10 +43,8 @@
     </div>
 
     <form>
-        <!-- <label for="file" class="label-file"></label> -->
         <input id="file" class="input-file" type="file" @change="onFileChange">
         <input type="text" v-model="message" placeholder="message...">
-
         <button type="button" @click="sendPost">Envoyer</button>
     </form> 
 
@@ -91,14 +89,13 @@ export default {
     const input = document.getElementById('file');
     const formData = new FormData();
 
-    formData.append('image', this.file);
-    formData.append('message', this.message);
+    this.file && formData.append('image', this.file); 
+    this.message && formData.append('message', this.message);
 
     axios.post('http://localhost:3000/api/posts/', formData,
     {
       headers: { "Authorization" : `Bearer ${ this.user.token }` }
     })
-
     .then(() => {
       this.message = null,
       this.file = null,

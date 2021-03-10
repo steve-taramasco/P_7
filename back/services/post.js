@@ -11,18 +11,17 @@ exports.createPost = async (req) => {
     const decodedToken = jwt.verify(token, "secret_token");
     const userId = decodedToken.userId;
     
-    const post = req.file ?
-        {
-            message: JSON.parse(req.body.message),
-            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-        } : {...req.body};
+    const post = {
+        ...(req.body.message && ({ message: req.body.message })),
+        ...(req.file && ({ image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`}))
+    };
 
     try {
 
-        console.log(post);
-
-        if (post.message = 'null') {
-            console.log('aucun message..')
+        if (!post.message && !post.image) {
+            throw 'error: message vide'
+        } else {
+            console.log(post);
         }
 
     //     return await Post.create({
@@ -33,6 +32,10 @@ exports.createPost = async (req) => {
     }
     catch(error) {
         throw Error(error);
+    }
+
+    finally {
+        console.log(post);
     }
 }
 
