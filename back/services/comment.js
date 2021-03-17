@@ -1,20 +1,24 @@
-const Comment = require('../models/Comment');
-const User    = require('../models/User');
-const date    = require('../config/moment');
 const jwt     = require('jsonwebtoken');
+const models  = require('../models');
 
-exports.createComment = async (comment, postId,  headers) => {
+exports.createComment = async (req) => {
 
-    const token = headers.authorization.split(' ')[1];
+    const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, "secret_token");
     const userId  = decodedToken.userId;
     
     try {
 
-        if (!comment) {
+        if (!req.body.content) {
             return "error: comment doesn't exist.."
         } else {
-           return await Comment.create({ comment: comment, userId: userId, postId: postId })
+           return await models.Comment.create(
+               {
+                   content: req.body.content,
+                   UserId: userId,
+                   MessageId: req.params.id
+                }
+            )
         }
     }
 
@@ -23,26 +27,10 @@ exports.createComment = async (comment, postId,  headers) => {
     }
 }
 
-exports.getComments = async (postId) => {
-
-    const comments = await Comment.findAll({ where: { postId: postId }, include: User })
-    const data = [];
+exports.deleteComment = async (postId) => {
 
     try {
-
-        for (elt of comments) {
-            const comment = {
-                id: elt.id,
-                username: elt.user.username,
-                message: elt.comment,
-                created: date.formatedDate(elt.createdAt),
-                likes: 0,
-                dislikes: 0
-            }
-            data.push(comment)
-        }
-
-        return data
+        return await models.Comment.destroy({ where: { id: postId }})
     }
     catch(error) {
         throw Error(error)

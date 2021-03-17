@@ -4,16 +4,16 @@ const bodyParser    = require('body-parser');
 const helmet        = require('helmet');
 const path          = require('path');
 const userRoutes    = require('./routes/user');
-const postRoutes    = require('./routes/post');
-const db            = require('./config/database');
+const messageRoutes = require('./routes/message');
+// const db            = require('./config/database');
 
 // Instantiate server
 const app = express();
 
 // Test dataBase
-db.authenticate()
-.then(() => console.log('Connection successfully.'))
-.catch(err => console.error('Unable to connect to the database:', err))
+// db.authenticate()
+// .then(() => console.log('Connection successfully.'))
+// .catch(err => console.error('Unable to connect to the database:', err))
 
 // CORS 
 app.use((req, res, next) => {
@@ -24,12 +24,13 @@ app.use((req, res, next) => {
 });
 
 // Configuration 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(helmet());
 
 // Routes
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/users', userRoutes);
-app.use('/api/posts', postRoutes);
+app.use('/api/messages', messageRoutes);
 
 module.exports = app;

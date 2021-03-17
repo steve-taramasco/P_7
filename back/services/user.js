@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
-const User = require('../models/User');
+const models = require('../models');
+
 require('dotenv').config();
 
 
@@ -11,18 +12,15 @@ exports.signup = async (body) => {
 
     try {
 
-        if (email_valid.test(body.email) && pass_valid.test(body.password)) {
+        if (email_valid.test(body.email) && pass_valid.test(body.password)
+            && body.username.length >= 4 && body.username.length < 13) {
 
             const pass_hash =  await bcrypt.hash( body.password, 10 );
-            const user = await User.create({ ...body, password: pass_hash });
-            const data = {
-                bio: user.bio,
-                email: user.email,
-                username: user.username
-            }
-            return data;
-        } 
-        throw 'Identifiants incorrects..';
+            const user = await models.User.create({ ...body, password: pass_hash });
+            return user;
+        }
+
+        throw 'Identifiants invalides..';
     }
     catch (error) {
         throw Error (error)
@@ -31,7 +29,7 @@ exports.signup = async (body) => {
 
 exports.login = async (body) => {
 
-    const user = await User.findOne({ where: { email: body.email }});
+    const user = await models.User.findOne({ where: { email: body.email }});
 
     try {
         
@@ -53,6 +51,70 @@ exports.login = async (body) => {
         }
     
         return data;
+
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
+exports.account = async (req) => {
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, "secret_token");
+    const userId = decodedToken.userId;
+
+    try {
+
+        const user = await models.User.findOne({
+            attributes: [ 'id', 'email', 'username', 'bio'],
+            where: { id: userId }
+        })
+
+        return user
+    }
+    catch(err) {
+        throw Error(error);
+    }
+}
+
+exports.modify = async (req) => {
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, "secret_token");
+    const userId = decodedToken.userId;
+
+    try {
+
+        const user = await models.User.findOne({ where: { id: userId }});
+
+        if (!user) {
+            throw 'error: unable to verify user';
+        }
+
+        return await user.update({ ...req.body });
+
+    } catch (error) {
+        throw Error(error);
+    }
+}
+
+exports.delete = async (req) => {
+
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, "secret_token");
+    const userId = decodedToken.userId;
+
+    try {
+
+        const user = await models.User.findOne({ where: { id: userId }});
+
+        if (!user) {
+            throw 'error: unable to verify user';
+        }
+
+        return await user.destroy({
+            onDelete: cascade
+        });
 
     } catch (error) {
         throw Error(error);

@@ -1,8 +1,13 @@
 <template>
   <div class="home">
+    
   </div>
 </template>
 
 <script>
-export default {}
+
+export default {
+  name: 'Home',
+
+}
 </script>

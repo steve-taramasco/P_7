@@ -1,5 +1,5 @@
-const user   = require('../models/User');
 const userService = require('../services/user');
+const models      = require('../models');
 
 
 exports.signup = (req, res, next) => {
@@ -15,25 +15,25 @@ exports.login = (req, res, next) => {
 }
 
 exports.modify = (req, res, next) => {
-    user.update({ ...req.body }, { where: { id: req.params.id }})
+    userService.modify(req)
     .then(() => res.status(200).json({ message: "l'utilisateur à bien été modifié !" }))
     .catch(error => res.status(500).json({ error }));
 }
 
 exports.delete = (req, res, next) => {
-    user.destroy({ where: { id: req.params.id }})
+    userService.delete(req)
     .then(() => res.status(200).json({ message: "l'utilisateur à bien été supprimé !"}))
-    .catch(error => res.status(500).json({ error }));
+    .catch(error => res.status(500).json({ error: error.message }));
 }
 
 exports.getUser = (req, res, next) => {
-    user.findOne({ where: { id: req.params.id }})
+    userService.account(req)
     .then(user => res.status(200).json({ user }))
     .catch(error => res.status(500).json({ error }));
 }
 
 exports.getUsers = (req, res, next) => {
-    user.findAll()
+    models.User.findAll()
     .then(users => res.status(200).json({ users }))
     .catch(error => res.status(500).json({ error }));
 }

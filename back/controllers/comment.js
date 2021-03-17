@@ -1,13 +1,13 @@
 const commentService = require('../services/comment');
 
 exports.createComment = (req, res, next) => {
-    commentService.createComment( req.body.comment, req.params.id, req.headers )
+    commentService.createComment(req)
     .then(comment => res.status(201).json({ comment }))
     .catch(error => res.status(500).json({ error: error.message }));
 }
 
-exports.getComments = (req, res, next) => {
-    commentService.getComments(req.params.id)
-    .then(comments => res.status(200).json({ comments }))
+exports.deleteComment = (req, res, next) => {
+    commentService.deleteComment(req.params.id)
+    .then(() => res.status(200).json({ message: "commentaire supprimmer" }))
     .catch(error => res.status(500).json({ error: error.message }));
 }

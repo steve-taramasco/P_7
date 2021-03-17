@@ -1,63 +1,43 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home        from '../views/Home.vue'
-import Signup      from '../views/Signup.vue'
-import Login       from '../views/Login.vue'
-import PostDetails from '../views/posts/PostDetails.vue'
-import Posts       from '../views/posts/Posts.vue'
-import User        from '../views/User.vue'
-// import NotFound    from '../views/NotFound.vue'
-import  store  from '../store'
+import { createRouter, createWebHistory } from 'vue-router'
+import Home from '../views/Home.vue'
 
 const routes = [
-  {// Home
+  {
     path: '/',
     name: 'Home',
     component: Home
   },
-  { // Users
-    path: '/users/signup',
-    name: 'Signup',
-    component: Signup
+  {
+    path: '/messages',
+    name: 'Messages',
+    component: () => import('../views/messages/Messages.vue')
   },
   {
-    path: '/users/login',
+    path: '/messages/:id',
+    name: 'Message',
+    props: true,
+    component: () => import('../views/messages/Message.vue')
+  },
+  {
+    path: '/login',
     name: 'Login',
-    component: Login
+    component: () => import('../views/Login.vue')
   },
   {
-    path: "/users/:id",
-    name: "User",
-    component: User, meta: { requiresAuth: true }
-  },
-  { // Posts
-    path: '/posts',
-    name: 'Posts',
-    component: Posts, meta: { requiresAuth: true }
+    path: '/signin',
+    name: 'Signin',
+    component: () => import('../views/Signin.vue')
   },
   {
-    path: '/posts/:id',
-    name: 'PostDetails',
-    component: PostDetails, meta: { requiresAuth: true },
-    props: true
-  },
-  // {
-  //   path: '/404',
-  //   alias: '*',
-  //   name: 'notFound',
-  //   component: NotFound
-  // }
+    path: '/users/me',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue')
+  }
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
-
-router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && !store.state.user) {
-    next({ name: 'Login' })
-  }
-  else next()
-});
 
 export default router

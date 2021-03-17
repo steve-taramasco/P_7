@@ -1,85 +1,38 @@
 <template>
-  <div>
-
+  <main>
     <header>
-      <aside>
-        <div class="profil">
-          <img class="icon" src="./assets/user.png" alt="icon">
-          <p v-if="user">{{ user.username }}</p>
-          <p v-else>{{ "inconnu" }}</p>
-        </div>
-      </aside>
-
-        <h1>Groupomania</h1>
-
-        <NavLink/>
-
+      <nav id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/messages">Messages</router-link> |
+        <router-link to="/login">Connection</router-link> |
+        <router-link to="/signin">Inscription</router-link> |
+        <router-link to="/users/me">Mon compte</router-link>
+      </nav>
     </header>
 
     <router-view/>
-
-  </div>
+  </main>
 </template>
 
-<script>
-import NavLink from './components/NavLink.vue'
-import { mapActions, mapState } from 'vuex'
-
-export default {
-  name: 'App',
-  components: {
-    NavLink
-  },
-
-  computed: {
-  ...mapState(['user'])
-  },
-  methods: {
-    ...mapActions(['storeUser'])
-  },
-  mounted () {
-    this.storeUser()
-  }
-}
-</script>
-
-
 <style lang="scss">
-
-header {
-  background-color: #f5f5f5f5;
-  border-bottom: solid 1px lightgray;
-  position: fixed;
-  width: -webkit-fill-available;
-  top: 0;
-  aside {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 0;
-    height: 100%;
-    .profil {
-      padding: .5em;
-    }
-    .icon {
-      width: 2em;
-    }
-    p {
-      margin: auto;
-    }
-  }
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 </style>

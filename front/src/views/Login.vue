@@ -1,31 +1,34 @@
 <template>
-  <div class="login">
-    <h2 class="title">Connection :</h2>
+  <div v-if="user">
+    <p>Content de vous revoir {{ user.username }}</p>
+  </div>
 
-    <form >
-      <input type="email" v-model="email" placeholder="email"/>
-      <input type="password" v-model="password" placeholder="password"/>
-      <div>
-        <label for="remember">Rester connecté</label>
-        <input type="checkbox" id="remember"/>
-        <button type="button" @click="login">connection</button>
-      </div>
+  <div v-else>
+    <form @submit.prevent="login">
+      <input type="email" v-model="email" placeholder="email" required/>
+      <input type="text" v-model="password" placeholder="password" required/>
+      <button type="submit">s'identifier</button>
     </form>
-
   </div>
 </template>
 
 <script>
+// @ is an alias to /src
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex';
 
 export default {
+  name: 'Login',
 
   data () {
     return {
-      email: null,
-      password: null,
+      email: '',
+      password: ''
     }
+  },
+
+  computed: {
+    ...mapState(['user', 'messages']),
   },
 
   methods: {
@@ -39,38 +42,10 @@ export default {
       .then((res) => { this.storeUser(res.data.user)})
       .catch(error => console.log(error));   
     }
-    
   }
 }
-
 </script>
 
-<style lang="scss" scoped>
+<style>
 
-.login {
-  margin-top: 8em;
-  h2 {
-    font-weight: normal;
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    input {
-      margin: .5em;
-      padding: .3em 1em;
-          width: 15em;
-          border-radius: 4px;
-          border: 1px solid darkgray;
-          &#remember {
-              width: auto;
-              vertical-align: middle;
-          }
-          &:focus {
-              outline: none;
-              box-shadow: 0px 0px 5px darkgrey;
-          }
-    }
-  }
-}
 </style>

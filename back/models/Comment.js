@@ -1,26 +1,30 @@
-const { DataTypes } = require('sequelize');
-const db            = require('../config/database');
-const Post          = require('./Post');
-const User          = require('./User');
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Comment extends Model {
 
-const Comment = db.define('comment', {
-    
-    id:      { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-    comment: { type: DataTypes.STRING, allowNull: false },
-},
-{
-    timestamps: true,
-    updatedAt: false,
+    static associate(models) {
+
+      models.Comment.belongsTo(models.Message,
+        { foreignKey: { allownull: false }});
+
+      models.Message.hasMany(models.Comment,
+        { foreignKey: { allownull: false }});
+
+      models.Comment.belongsTo(models.User,
+        { foreignKey: { allowNull: false }});
+
+      models.User.hasMany(models.Comment,
+        { foreignKey: { allowNull: false }});
+    }
+  };
+  Comment.init({
+    userId: { type: DataTypes.INTEGER, allownull: false },
+    messageId: { type: DataTypes.INTEGER, allownull: false },
+    content: { type: DataTypes.STRING, allownull: false }
+  }, {
+    sequelize,
     modelName: 'Comment',
-    engine: 'INNODB'
-});
-
-    // ASSOCIATIONS //
-
-Comment.belongsTo(Post, { foreignKey: { allowNull: false }});
-Post.hasMany(Comment, { foreignKey: { allowNull: false }});
-
-Comment.belongsTo(User, { foreignKey: { allowNull: false }});
-User.hasMany(Comment, { foreignKey: { allowNull: false }});
-
-module.exports = Comment;
+  });
+  return Comment;
+};
