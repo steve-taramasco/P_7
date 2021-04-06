@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="d-flex-column w-75">
-                    <router-link :to="{ name: 'MessageDetails', params: { id: message.id }}">
+                    <router-link class="text-dark" :to="{ name: 'MessageDetails', params: { id: message.id }}">
                         <p v-if="message.content && !message.attachment">{{ message.content }}</p>
                         <p v-else-if="!message.content && message.attachment">
                             <img :src="message.attachment" :alt="message.attachment" width="100" />

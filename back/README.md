@@ -1,2 +1,11 @@
-# groupomania
-réseau social d'entreprise
+# back
+
+## Project setup
+```
+npm install
+```
+
+### start server
+```
+node server
+```

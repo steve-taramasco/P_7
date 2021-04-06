@@ -1,6 +1,6 @@
 <template>
 
-    <b-form class="container d-flex flex-wrap justify-content-center">
+    <b-form role="form" class="container d-flex flex-wrap justify-content-center">
 
         <label class="sr-only" for="message">message</label>
 
@@ -12,7 +12,7 @@
         class="col-10 col-sm-8 mr-sm-3"
         ></b-form-input>
 
-        <label for="file" class="col-2 col-sm-1 p-0 mr-sm-3 label-file">
+        <label tabindex="0" for="file" class="col-2 col-sm-1 p-0 mr-sm-3 label-file">
             <b-icon-image font-scale="2.5"></b-icon-image>
         </label>
 
@@ -24,7 +24,7 @@
         @change="onFileChange"
         />
 
-        <b-button class="h-100 col-sm-2" variant="primary" @click="send">Envoyer</b-button>
+        <b-button class="h-100 col-sm-2 font-weight-bold" variant="primary" @click="send">Envoyer</b-button>
 
     </b-form>
 

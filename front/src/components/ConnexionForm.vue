@@ -1,14 +1,14 @@
 <template>
   
-    <main class="container">
+    <main role="main" class="container">
         
         <b-tabs content-class="mt-3">
 
             <b-tab title="Connection" active>
 
-                <b-form @submit="login">
+                <b-form role="form" @submit="login">
                     <b-form-group>
-                        <b-form-input v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" required></b-form-input>
+                        <b-form-input v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
                         <b-form-invalid-feedback :state="isEmail">
                             l'email doit être au format : exemple@email.com
                         </b-form-invalid-feedback>
@@ -16,7 +16,7 @@
                     </b-form-group>
 
                     <b-form-group>
-                        <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" required></b-form-input>
+                        <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
                         <b-form-invalid-feedback :state="isPass">
                             "lettre et/ou chiffre" 5 caractères min. 
                         </b-form-invalid-feedback>
@@ -29,10 +29,10 @@
 
             <b-tab title="Incription">
 
-                <b-form @submit="signup">
+                <b-form role="form" @submit="signup">
                     
                     <b-form-group>
-                        <b-form-input v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" required></b-form-input>
+                        <b-form-input v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
                         <b-form-invalid-feedback :state="isEmail">
                             l'email doit être au format : exemple@email.com
                         </b-form-invalid-feedback>
@@ -40,7 +40,7 @@
                     </b-form-group>
 
                     <b-form-group>
-                        <b-form-input v-model.trim="form.username" type="text" placeholder="username" :state="isValid" required></b-form-input>
+                        <b-form-input v-model.trim="form.username" type="text" placeholder="username" :state="isValid" aria-required="true"></b-form-input>
                         <b-form-invalid-feedback :state="isValid">
                             "lettre et/ou chiffre" 5 caractères min.  
                         </b-form-invalid-feedback>
@@ -48,7 +48,7 @@
                     </b-form-group>
 
                     <b-form-group>
-                        <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" required></b-form-input>
+                        <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
                         <b-form-invalid-feedback :state="isPass">
                             "lettre et/ou chiffre" 5 caractères min. 
                         </b-form-invalid-feedback>

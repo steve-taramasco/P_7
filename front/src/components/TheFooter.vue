@@ -1,10 +1,10 @@
 <template>
-    <footer class="bg-info">
-        <address class="mb-0">
+    <footer class="bg-info text-white" role="contentinfo">
+        <address class="mb-0 font-weight-bold">
             GROUPOMANIA<br>
             10 place Paradis 75010 Paris<br>
             Ouvert de 6h à 18h, du lundi au vendredi<br>
-            <b-link href="mailto:contact@groupomania.com" title="nous contacter ?">contact@groupomania.com</b-link>
+            <b-link class="text-white" href="mailto:contact@groupomania.com" title="nous contacter ?">contact@groupomania.com</b-link>
         </address>
     </footer>
 </template>

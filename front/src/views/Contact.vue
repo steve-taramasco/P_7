@@ -1,28 +1,28 @@
 <template>
-  <main>
+  <main role="main">
 
-    <section class="contact container">
-      <b-jumbotron header="Contactez-nous !" header-level="5"></b-jumbotron>
+    <section role="region" class="contact container">
+      <b-jumbotron header-tag="h2" header="Contactez-nous !" header-level="5"></b-jumbotron>
 
-      <b-card  bg-variant="light" title="Des idées innoventes ?" title-tag="h2" class="mb-4">
+      <b-card  bg-variant="light" title="Des idées innoventes ?" title-tag="h3" class="mb-4">
         <b-card-text>
           Nous sommes ravis que vous souhaitiez collaborer avec notre agence.
         </b-card-text>
 
         <b-card-text>
           Parlez-nous de votre projet
-          <b-link href="mailto:contact@groupomania.com" title="nous contacter ?">ici</b-link>
+          <b-link class="font-weight-bold text-dark" href="#" title="nous contacter ?">ici</b-link>
         </b-card-text>
       </b-card>
 
-      <b-card  bg-variant="light" title="Un problème rencontré ?" title-tag="h2" class="mb-4">
+      <b-card  bg-variant="light" title="Un problème rencontré ?" title-tag="h3" class="mb-4">
         <b-card-text>
           Nos équipes s'efforcent de vous repondre dans les plus brefs délais.
         </b-card-text>
 
         <b-card-text>
           N'hesitez pas à nous remonter tout problème constaté
-          <b-link href="mailto:contact@groupomania.com" title="nous contacter ?">ici</b-link>
+          <b-link class="font-weight-bold text-dark" href="#" title="nous contacter ?">ici</b-link>
         </b-card-text>
       </b-card>
     </section>

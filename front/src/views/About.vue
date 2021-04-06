@@ -1,5 +1,5 @@
 <template>
-<main>
+<main role="main">
   <div class="about container">
     <b-jumbotron header="GROUPOMANIA" header-level="5" lead="Qui sommes nous..."></b-jumbotron>
 
@@ -12,7 +12,7 @@
 
         <b-card-text>
           Pour plus d'informations rendez-vous sur notre
-          <b-link href="#" title="groupomania.fr">site web</b-link>
+          <b-link class="font-weight-bold text-dark" href="#" title="groupomania.fr">site web</b-link>
         </b-card-text>
       </b-card>
   </div>

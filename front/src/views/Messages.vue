@@ -1,7 +1,7 @@
 <template>
-  <main class="container">
+  <main role="main" class="container">
 
-    <section class="message" v-if="messages">
+    <section role="region" class="message" v-if="messages">
       <message
       v-for="list in lists"
       :key="list.id"
@@ -21,7 +21,7 @@
       <loading></loading>
     </div>
 
-    <section class="fixed-bottom pt-2 bg-white border-top">
+    <section role="region" class="fixed-bottom pt-2 bg-white border-top">
       <messageForm ></messageForm>
     </section>
       

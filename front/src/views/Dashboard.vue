@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <main role="main" class="container">
 
     <b-tabs content-class="mt-3" v-if="user">
       <b-tab title="Mes infos" active>
@@ -13,7 +13,7 @@
                   <b-avatar id="avatar" size="5rem" :src="user.avatar"></b-avatar>
                 </b-card-body>
 
-                <label for="file" class="label-file">
+                <label for="file" class="label-file" tabindex="0">
                     <b-icon-person-bounding-box font-scale="2" title="changer l'image"></b-icon-person-bounding-box>
                 </label>
 
@@ -25,13 +25,11 @@
                 @change="updateAvatar"
                 />
 
-                <!-- <b-form-file id="file" @change="updateAvatar"></b-form-file> -->
-
               </b-card>
             </b-col>
 
             <b-col class=" col-12 col-md-7">
-              <b-form @submit.prevent="infoValid" @reset.prevent="clear">
+              <b-form role="form" @submit.prevent="infoValid" @reset.prevent="clear">
 
               <b-form-group label-align-sm="right" label-cols-sm="2" label="email :">
                   <b-form-input type="email" :value="user.email" :state="isEmail" @input="updateEmail"></b-form-input>
@@ -46,8 +44,8 @@
               </b-form-group>
 
             
-            <b-button class="col-12 col-md-4 m-1 ml-md-3" type="reset" variant="danger">Annuler</b-button>
-            <b-button class="col-12 col-md-4 m-1" type="submit" variant="success">Appliquer</b-button>
+            <b-button class="col-12 col-md-4 m-1 ml-md-3 font-weight-bold" type="reset" variant="danger">Annuler</b-button>
+            <b-button class="col-12 col-md-4 m-1 font-weight-bold" type="submit" variant="success">Appliquer</b-button>
             
               
 
@@ -58,7 +56,7 @@
       </b-tab>
 
       <b-tab title="Mot de passe">
-        <b-form @submit.prevent="passValid">
+        <b-form role="form" @submit.prevent="passValid">
 
           <b-form-group label-align-sm="right" label-cols-sm="5" label="mot de passe actuel :">
               <b-form-input id="pass" type="password" v-model.trim="password" :state="isPass" required></b-form-input>
@@ -72,14 +70,14 @@
               <b-form-input id="pass2" type="password" v-model.trim="confirm" :state="isConfirm" required></b-form-input>
           </b-form-group>
 
-          <b-button class="col-12 col-md-auto" type="submit" variant="success">Appliquer</b-button>
+          <b-button class="col-12 col-md-auto font-weight-bold" type="submit" variant="success">Appliquer</b-button>
 
         </b-form>
       </b-tab>
 
       <b-tab title="Mon compte">
-        <b-button class="col-12 col-md-5 m-1" variant="warning" @click="logout">Se déconnecter</b-button>
-        <b-button class="col-12 col-md-5 m-1" variant="danger" @click="deleted">Supprimer mon compte</b-button>
+        <b-button class="col-12 col-md-5 m-1 font-weight-bold" variant="warning" @click="logout">Se déconnecter</b-button>
+        <b-button class="col-12 col-md-5 m-1 font-weight-bold" variant="danger" @click="deleted">Supprimer mon compte</b-button>
       </b-tab>
     </b-tabs>
 
@@ -255,7 +253,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .label-file {
     cursor: pointer;

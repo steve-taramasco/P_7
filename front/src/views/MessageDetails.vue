@@ -1,7 +1,7 @@
 <template>
-  <main class="container">
+  <main role="main" class="container">
 
-    <section class="message" v-if="message">
+    <section role="region" class="message" v-if="message">
       <message-details
       :message="message"
       ></message-details>
@@ -27,7 +27,7 @@
       <loading></loading>
     </div>
 
-    <section class="form fixed-bottom p-2 bg-white border-top">
+    <section role="region" class="form fixed-bottom p-2 bg-white border-top">
       <comment-form
       :messageId="id"
       ></comment-form>
