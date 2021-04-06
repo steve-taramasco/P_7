@@ -5,15 +5,9 @@ const helmet        = require('helmet');
 const path          = require('path');
 const userRoutes    = require('./routes/user');
 const messageRoutes = require('./routes/message');
-// const db            = require('./config/database');
 
 // Instantiate server
 const app = express();
-
-// Test dataBase
-// db.authenticate()
-// .then(() => console.log('Connection successfully.'))
-// .catch(err => console.error('Unable to connect to the database:', err))
 
 // CORS 
 app.use((req, res, next) => {

@@ -8,20 +8,20 @@ const likeCtrl    = require('../controllers/like');
 
     // messages //
     
-router.post('/new', auth, multer, messageCtrl.createMessage);   // CREATE
-router.get('/', auth, messageCtrl.getMessages);                 // READ (all)
-router.get('/:id', auth, messageCtrl.getMessage);               // READ
-router.delete('/:id', auth, messageCtrl.deleteMessage);         // DELETE
+router.post('/new', auth, multer, messageCtrl.createMessage);
+router.get('/', messageCtrl.getMessages);
+router.get('/:id', auth, messageCtrl.getMessage);
+router.delete('/:id', auth, messageCtrl.deleteMessage);
 
     // Comments //
 
-router.post('/:id/comment', auth, commentCtrl.createComment);   // CREATE
-router.delete('/:id/comment/:id', auth, commentCtrl.deleteComment); // DELETE
+router.post('/:id/comment', auth, commentCtrl.createComment);
+router.delete('/:id/comment/:id', auth, commentCtrl.deleteComment);
 
     //  Likes //
 
-router.post('/:id/like', auth, likeCtrl.postLike);              // CREATE || DELETE
-router.get('/:id/like', auth, likeCtrl.getLikes);               // READ
+router.post('/:id/like', auth, likeCtrl.postLike);
+router.get('/:id/like', auth, likeCtrl.getLikes);          
 
 
 module.exports = router;

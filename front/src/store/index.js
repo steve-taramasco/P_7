@@ -1,40 +1,95 @@
-import { createStore } from 'vuex'
+import Vue from 'vue'
+import Vuex from 'vuex'
 import axios from 'axios'
 
-export default createStore({
-  
+Vue.use(Vuex)
+
+export default new Vuex.Store({
   state: {
-    user: null,
-    messages: null
+
+    user: {},
+    file: null,
+    messages: null,
+    message: null,
+    token: JSON.parse(sessionStorage.getItem('user_token')) || null,
+    isAdmin: false,
+    error: null
   },
   mutations: {
-    STORE_USER(state, user) {
-      state.user = user
+
+    UPDATE_EMAIL(state, email) {
+      state.user.email = email
     },
 
-    STORE_POSTS(state, messages) {
-      state.messages = messages
+    UPDATE_USERNAME(state, username) {
+      state.user.username = username
+    },
+
+    UPDATE_BIO(state, bio) {
+      state.user.bio = bio
+    },
+
+    UPDATE_AVATAR(state, file) {
+    state.user.avatar = URL.createObjectURL(file);
+    },
+
+    STORE_USER(state, user) {
+      state.user = user;
+      user.token && sessionStorage.setItem("user_token", JSON.stringify(user.token));
+      state.token = JSON.parse(sessionStorage.getItem('user_token'));
+      state.isAdmin = user.isAdmin;
+    },
+
+    STORE_MESSAGES(state, messages) {
+      state.messages = messages;
+    },
+
+    STORE_MESSAGE(state, message) {
+      state.message = message;
+    },
+
+    STORE_ERROR(state, error) {
+      state.error = error;
+    },
+
+    CLEAR_USER(state) {
+      state.user = {};
     }
+
   },
   actions: {
 
-    storeUser(context, user) {
-      context.commit('STORE_USER', user)
+    clearUser(context) {
+      context.commit('CLEAR_USER')
     },
 
-    getPosts(context) {
-      axios.get('http://localhost:3000/api/messages/',
+    getUser(context) {
+      axios.get('http://localhost:3000/api/users/me',
       {
-        headers: { "Authorization" : `Bearer ${ context.state.user.token }` }
+        headers: { "Authorization" : `Bearer ${ context.state.token }` }
       })
-      .then(res => {
-        console.log(res),
-        context.commit('STORE_POSTS', res.data.messages)
+      .then((res) => context.commit('STORE_USER', res.data.user))
+      .catch(error => console.log(error))  
+    },
+
+    getMessages(context) {
+      axios.get('http://localhost:3000/api/messages',
+      {
+        headers: { "Authorization" : `Bearer ${ context.state.token }` }
       })
-      .catch(error => console.error({ error }));
+      .then((res) => context.commit('STORE_MESSAGES', res.data.messages))
+      .catch(error => console.log(error))  
+    },
+
+    getMessage(context, payload) {
+      axios.get('http://localhost:3000/api/messages/' + payload,
+      {
+        headers: { "Authorization" : `Bearer ${ context.state.token }` }
+      })
+      .then((res) => context.commit('STORE_MESSAGE', res.data.message))
+      .catch(error => console.log(error))  
     }
 
   },
-  modules: {
-  }
+  modules: {}
 })

@@ -1,5 +1,4 @@
 const messageService = require('../services/message');
-const models      = require('../models');
 
 exports.createMessage = (req, res, next) => {
     messageService.createMessage(req)
@@ -14,9 +13,9 @@ exports.getMessage = (req, res, next) => {
 };
 
 exports.deleteMessage = (req, res, next) => {
-    models.Message.destroy({ where: { id: req.params.id }})
-    .then(() => res.status(200).json({ message: "le message à été supprimé !"}))
-    .catch(error => res.status(400).json({ error }));
+    messageService.deleteMessage(req)
+    .then(() => res.status(200).json({ message: "le message à été supprimé !" }))
+    .catch(error => res.status(400).json({ error: error.message }));
 }
 
 exports.getMessages = (req, res, next) => {

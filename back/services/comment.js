@@ -1,10 +1,11 @@
-const jwt     = require('jsonwebtoken');
-const models  = require('../models');
+const jwt    = require('jsonwebtoken');
+const models = require('../models');
+const dotenv = require('dotenv').config();
+
 
 exports.createComment = async (req) => {
-
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_token");
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
     const userId  = decodedToken.userId;
     
     try {
@@ -21,16 +22,25 @@ exports.createComment = async (req) => {
             )
         }
     }
-
     catch(error) {
         throw Error(error);
     }
 }
 
-exports.deleteComment = async (postId) => {
+exports.deleteComment = async (req) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
+    const userId = decodedToken.userId;
 
     try {
-        return await models.Comment.destroy({ where: { id: postId }})
+        const user = await models.User.findOne({ where: { id: userId }});
+        const comment = await models.Comment.findOne({ where: { id: req.params.id }});
+
+        if (comment.userId != userId && user.isAdmin == 0) {
+            throw 'error: Action non authorisée !';
+        }
+
+        return await models.Comment.destroy({ where: { id: req.params.id }})
     }
     catch(error) {
         throw Error(error)

@@ -1,25 +1,21 @@
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const models = require('../models');
-
-require('dotenv').config();
-
+const fs     = require('fs');
+const dotenv = require('dotenv').config();
 
 exports.signup = async (body) => {
-
     const email_valid = /^[\w._-]+@[\w._-]+\.[a-z]{2,6}$/i;
     const pass_valid  = /^[\w._-]{5,}/i;
 
     try {
-
         if (email_valid.test(body.email) && pass_valid.test(body.password)
-            && body.username.length >= 4 && body.username.length < 13) {
+            && body.username.length >= 4 && body.username.length < 20) {
 
             const pass_hash =  await bcrypt.hash( body.password, 10 );
             const user = await models.User.create({ ...body, password: pass_hash });
             return user;
         }
-
         throw 'Identifiants invalides..';
     }
     catch (error) {
@@ -29,14 +25,12 @@ exports.signup = async (body) => {
 
 exports.login = async (body) => {
 
-    const user = await models.User.findOne({ where: { email: body.email }});
-
     try {
-        
+        const user = await models.User.findOne({ where: { email: body.email }});
+
         if(!user) {
             throw 'Email inconnu !'
         }
-
         const isValid = await bcrypt.compare(body.password, user.password);
 
         if(!isValid) {
@@ -47,9 +41,10 @@ exports.login = async (body) => {
             email: user.email,
             username: user.username,
             bio: user.bio,
+            avatar: user.avatar,
+            isAdmin: user.isAdmin,
             token: jwt.sign({ userId: user.id }, process.env.USER_TOKEN, { expiresIn: '24h' })
         }
-    
         return data;
 
     } catch (error) {
@@ -58,18 +53,15 @@ exports.login = async (body) => {
 }
 
 exports.account = async (req) => {
-
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_token");
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
     const userId = decodedToken.userId;
 
     try {
-
         const user = await models.User.findOne({
-            attributes: [ 'id', 'email', 'username', 'bio'],
+            attributes: [ 'id', 'email', 'username', 'bio', 'avatar', 'isAdmin'],
             where: { id: userId }
         })
-
         return user
     }
     catch(err) {
@@ -78,43 +70,105 @@ exports.account = async (req) => {
 }
 
 exports.modify = async (req) => {
-
     const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_token");
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
     const userId = decodedToken.userId;
 
     try {
-
         const user = await models.User.findOne({ where: { id: userId }});
+        const data = {
+            ...(req.body && req.body),
+            ...(req.file && ({ avatar: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`}))
+        };
 
         if (!user) {
             throw 'error: unable to verify user';
         }
 
-        return await user.update({ ...req.body });
+        if (data.avatar && user.avatar) {
+            const filename = user.avatar.split('/images/')[1];
+            fs.unlink(`images/${filename}`, err => {
+                if (err) {
+                  console.error(err)
+                  return
+                }
+            })
+        }
+        return await user.update({ ...data }, { returning: true, plain: true })
 
     } catch (error) {
         throw Error(error);
     }
 }
 
-exports.delete = async (req) => {
-
-    const token = req.headers.authorization.split(' ')[1];
-    const decodedToken = jwt.verify(token, "secret_token");
-    const userId = decodedToken.userId;
+exports.modifyPass = async (req) => {
+    const token        = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
+    const userId       = decodedToken.userId;
+    const pass_valid   = /^[\w._-]{5,}/i;
 
     try {
-
         const user = await models.User.findOne({ where: { id: userId }});
 
         if (!user) {
             throw 'error: unable to verify user';
         }
+        const isValid = await bcrypt.compare(req.body.password, user.password);
 
-        return await user.destroy({
-            onDelete: cascade
-        });
+        if(!isValid) {
+            throw 'password incorrect !'
+        }
+
+        if (!pass_valid.test(req.body.newPass)) {
+            throw 'password invalid !'
+        }
+        const pass_hash =  await bcrypt.hash( req.body.newPass, 10 );
+        return await user.update({ password: pass_hash }, { returning: true, plain: true })
+    }
+    catch(error) {
+        throw Error(error);
+    }
+    finally {
+        console.log(req.body);
+    }
+},
+
+exports.delete = async (req) => {
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
+    const userId = decodedToken.userId;
+
+    try {
+
+        const user = await models.User.findOne({ where: { id: userId }, include: [{ model: models.Message }]});
+        if (!user) {
+            throw 'error: unable to verify user';
+        }
+
+        if (user.avatar) {
+            const filename = user.avatar.split('/images/')[1];
+            fs.unlink(`images/${filename}`, err => {
+                if (err) {
+                  console.error(err)
+                  return
+                }
+            })
+        }
+        
+        for (elt of user.Messages) {
+
+            if (elt.attachment) {
+
+                const filename = elt.attachment.split('/images/')[1];
+                fs.unlink(`images/${filename}`, err => {
+                    if (err) {
+                        console.error(err)
+                        return
+                    }
+                })
+            }
+        }
+        return await user.destroy();
 
     } catch (error) {
         throw Error(error);
