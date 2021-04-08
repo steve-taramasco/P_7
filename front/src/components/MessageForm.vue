@@ -7,13 +7,14 @@
         <b-form-input
         id="message"
         type="text"
+        aria-label="ecrire un message"
         v-model.trim="message"
         placeholder="Aa"
         class="col-10 col-sm-8 mr-sm-3"
         ></b-form-input>
 
-        <label tabindex="0" for="file" class="col-2 col-sm-1 p-0 mr-sm-3 label-file">
-            <b-icon-image font-scale="2.5"></b-icon-image>
+        <label class="col-2 col-sm-1 p-0 mr-sm-3 label-file" tabindex="0" for="file">
+            <b-icon-image font-scale="2.5" title="ajouter une image" aria-label="selectionner un fichier"></b-icon-image>
         </label>
 
         <input

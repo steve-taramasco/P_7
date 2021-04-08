@@ -1,29 +1,33 @@
 <template>
-  <main role="main" class="container">
+  <main role="main">
 
-    <section role="region" class="message" v-if="messages">
-      <message
-      v-for="list in lists"
-      :key="list.id"
-      :message="list"
-      :userId="user.id"
-      :isAdmin="isAdmin"
-      ></message>
+    <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Fil d’actualité</h1>
 
-      <b-pagination class="justify-content-center"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      ></b-pagination>
+    <section role="region" class="message container" v-if="messages">
+
+        <message
+        v-for="list in lists"
+        :key="list.id"
+        :message="list"
+        :userId="user.id"
+        :isAdmin="isAdmin"
+        ></message>
+
+        <b-pagination class="justify-content-center"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        ></b-pagination>
+        
     </section>
 
     <div v-else>
       <loading></loading>
     </div>
 
-    <section role="region" class="fixed-bottom pt-2 bg-white border-top">
+    <div role="region" class="fixed-bottom pt-2 bg-white border-top">
       <messageForm ></messageForm>
-    </section>
+    </div>
       
   </main>
 </template>

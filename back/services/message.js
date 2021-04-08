@@ -44,6 +44,7 @@ exports.getMessages = async (req) => {
         const data = await models.Message.findAll({
             // attributes: (fields && fields.split(',')) || null,
             // order: [(order && order.split(':')) || ['createdAt', 'ASC']],
+            order: [['createdAt', 'DESC']],
             // limit: (!isNaN(limit) && limit || null),
             // offset: (!isNaN(offset) && offset || null),
             include: [
@@ -63,7 +64,7 @@ exports.getMessages = async (req) => {
                         }
                     ]
                 }
-            ]
+            ],
         });
 
         for (elt of data) {

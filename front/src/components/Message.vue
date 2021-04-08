@@ -1,43 +1,49 @@
 <template>
 
-    <div>
+    <b-list-group-item tag="article" class="bg-light rounded border mb-5">
 
-        <b-list-group-item  tag="article" class="bg-light align-items-center">
+        <div class="d-flex mb-3">                
+            <b-avatar class="mr-2" size="3rem" :src="message.avatar"></b-avatar>
 
-            <div class="d-flex justify-content-end">
-                <time class="">{{ message.date }}</time>
+            <div class="text-left">
+                <span class="m-0 font-weight-bold">{{ message.username }}</span><br>
+                <time class="small">{{ message.date }}</time>
             </div>
-
-            <div class="d-flex align-items-center">
-                <div class="d-flex-column w-25">
-                    <b-avatar :src="message.avatar"></b-avatar>
-                    <p>{{ message.username }}</p>
-                </div>
-
-                <div class="d-flex-column w-75">
-                    <router-link class="text-dark" :to="{ name: 'MessageDetails', params: { id: message.id }}">
-                        <p v-if="message.content && !message.attachment">{{ message.content }}</p>
-                        <p v-else-if="!message.content && message.attachment">
-                            <img :src="message.attachment" :alt="message.attachment" width="100" />
-                        </p>
-                        <div v-else>
-                            <img :src="message.attachment" :alt="message.attachment" width="100" />
-                            <p>{{ message.content }}</p>
-                        </div>
-                    </router-link>
-                </div>
-            </div>
-            
-        </b-list-group-item>
-        
-        <div class="d-flex justify-content-end mb-3">
-            <span class="small mr-1">commentaires {{ message.comments }}</span>
-            <span class="small mr-1" @click="like(message.id, '1')">like {{ message.likes }}</span>
-            <span class="small mr-1" @click="like(message.id, '-1')">dislike {{ message.dislikes }}</span>
-            <span v-if="auth" class="small mr-1" @click="trash(message.id)">supprimer</span>
         </div>
 
-    </div>
+        <div class="d-flex-column text-sm-left">
+            <p v-if="message.content && !message.attachment">{{ message.content }}</p>
+            <p v-else-if="!message.content && message.attachment">
+                <img :src="message.attachment" :alt="message.attachment" width="100" />
+            </p>
+            <div v-else>
+                <img :src="message.attachment" :alt="message.attachment" width="100" />
+                <p>{{ message.content }}</p>
+            </div>
+        </div>
+        
+        <div class="d-flex align-items-center justify-content-between border-top pt-1">
+            <div>
+                <b-icon-hand-thumbs-up tabindex="0" class="like small mr-1" @click="like(message.id, '1')" aria-label="j'aime"></b-icon-hand-thumbs-up>
+                <span>{{ message.likes }}</span>
+                
+                <b-icon-hand-thumbs-down tabindex="0" class="like small mr-1 ml-3" @click="like(message.id, '-1')" aria-label="j'aime pas"></b-icon-hand-thumbs-down>
+                <span>{{ message.dislikes }}</span>
+
+                <b-icon-chat-square class="small mr-1 ml-3"></b-icon-chat-square>
+                <span>{{ message.comments }}</span>
+            </div>
+
+            <div>
+                <router-link class="text-dark" :to="{ name: 'MessageDetails', params: { id: message.id }}" aria-label="repondre">
+                    <b-icon-reply font-scale="1.2"></b-icon-reply>
+                </router-link>
+
+                <b-icon-trash tabindex="0" class="ml-3" v-if="auth" @click="trash(message.id)" aria-label="supprimer"></b-icon-trash>
+            </div>
+        </div>
+        
+    </b-list-group-item>
 
 </template>
 
@@ -83,3 +89,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+.like {
+    cursor: pointer;
+}
+</style>

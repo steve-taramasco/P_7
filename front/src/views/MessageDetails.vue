@@ -1,7 +1,9 @@
 <template>
-  <main role="main" class="container">
+  <main role="main">
 
-    <section role="region" class="message" v-if="message">
+    <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Commentaires</h1>
+
+    <section role="region" class="message container" v-if="message">
       <message-details
       :message="message"
       ></message-details>

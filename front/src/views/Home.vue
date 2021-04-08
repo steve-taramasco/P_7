@@ -1,6 +1,8 @@
 <template>
     <main role="main" class="container">
 
+        <h1 class="h4 mb-4 p-2">Bienvenue !</h1>
+
         <b-card-group deck>
             <b-card no-body bg-variant="primary" text-variant="white">
                 <b-card-body>
