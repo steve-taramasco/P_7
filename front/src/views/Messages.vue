@@ -1,9 +1,9 @@
 <template>
-  <main role="main">
+  <main>
 
     <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Fil d’actualité</h1>
 
-    <section role="region" class="message container" v-if="messages">
+    <section class="message container" v-if="messages">
 
         <message
         v-for="list in lists"
@@ -25,9 +25,9 @@
       <loading></loading>
     </div>
 
-    <div role="region" class="fixed-bottom pt-2 bg-white border-top">
+    <section class="fixed-bottom pt-2 bg-white border-top">
       <messageForm ></messageForm>
-    </div>
+    </section>
       
   </main>
 </template>

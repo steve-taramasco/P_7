@@ -1,9 +1,9 @@
 <template>
-  <main role="main">
+  <main>
 
     <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Mon compte</h1>
 
-    <section role="region" class="container" v-if="user">
+    <section class="container" v-if="user">
         <b-tabs content-class="mt-3">
             <b-tab :title-link-class="linkClass" title="Mes infos" active>
                 <b-container>
@@ -31,7 +31,7 @@
                         </b-col>
 
                         <b-col class=" col-12 col-md-7">
-                            <b-form role="form" @submit.prevent="infoValid" @reset.prevent="clear">
+                            <b-form @submit.prevent="infoValid" @reset.prevent="clear">
 
                                 <b-form-group label-align-sm="right" label-cols-sm="2" label-for="email" label="email :">
                                     <b-form-input id="email" type="email" :value="user.email" :state="isEmail" @input="updateEmail"></b-form-input>
@@ -55,7 +55,7 @@
             </b-tab>
 
             <b-tab :title-link-class="linkClass" title="Mot de passe">
-                <b-form role="form" @submit.prevent="passValid">
+                <b-form @submit.prevent="passValid">
 
                     <b-form-group label-align-sm="right" label-cols-sm="5" label-for="pass" label="mot de passe actuel :">
                         <b-form-input id="pass" type="password" v-model.trim="password" :state="isPass" required></b-form-input>
@@ -111,7 +111,7 @@ export default {
         ...mapState(['user', 'token']),
 
         linkClass() {
-          return 'font-weight-bold'
+          return 'text-dark'
         },
     
         isEmail() {

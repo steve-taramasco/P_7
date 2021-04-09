@@ -1,9 +1,9 @@
 <template>
-    <main role="main">
+    <main>
 
         <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Contactez-nous !</h1>
 
-        <section role="region" class="contact container">
+        <section class="contact container">
             <b-card  bg-variant="light" class="mb-4">
                 <b-card-title title-tag="h2" class="h5">
                     Des idées innoventes ?

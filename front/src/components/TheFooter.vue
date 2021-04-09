@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-info text-white fixed-bottom" role="contentinfo">
+    <footer class="bg-info text-white fixed-bottom">
         <img src="../assets/icon-left-font-monochrome-white.svg" alt="logo groupomania" width="200" class="m-1">
 
         <address class="mb-0 font-weight-bold">

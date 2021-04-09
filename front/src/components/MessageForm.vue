@@ -1,6 +1,6 @@
 <template>
 
-    <b-form role="form" class="container d-flex flex-wrap justify-content-center">
+    <b-form class="container d-flex flex-wrap justify-content-center">
 
         <label class="sr-only" for="message">message</label>
 

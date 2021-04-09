@@ -7,39 +7,46 @@
 
             <div class="text-left">
                 <span class="m-0 font-weight-bold">{{ message.username }}</span><br>
-                <time class="small">{{ message.date }}</time>
+                <span class="small">{{ message.date }}</span>
             </div>
         </div>
 
         <div class="d-flex-column text-sm-left">
             <p v-if="message.content && !message.attachment">{{ message.content }}</p>
             <p v-else-if="!message.content && message.attachment">
-                <img :src="message.attachment" :alt="message.attachment" width="100" />
+                <img class="w-100 rounded" :src="message.attachment" :alt="message.attachment"/>
             </p>
             <div v-else>
-                <img :src="message.attachment" :alt="message.attachment" width="100" />
+                <img class="w-100 rounded" :src="message.attachment" :alt="message.attachment"/>
                 <p>{{ message.content }}</p>
             </div>
         </div>
         
-        <div class="d-flex align-items-center justify-content-between border-top pt-1">
-            <div>
-                <b-icon-hand-thumbs-up tabindex="0" class="like small mr-1" @click="like(message.id, '1')" aria-label="j'aime"></b-icon-hand-thumbs-up>
-                <span>{{ message.likes }}</span>
-                
-                <b-icon-hand-thumbs-down tabindex="0" class="like small mr-1 ml-3" @click="like(message.id, '-1')" aria-label="j'aime pas"></b-icon-hand-thumbs-down>
-                <span>{{ message.dislikes }}</span>
+        <div class="d-flex justify-content-between border-top pt-1">
+            <div class="d-flex align-items-center">
 
-                <b-icon-chat-square class="small mr-1 ml-3"></b-icon-chat-square>
+                <b-button type="button" class="btn-light" @click="like(message.id, '1')" aria-label="j'aime">
+                    <b-icon-hand-thumbs-up class="mr-1"></b-icon-hand-thumbs-up>
+                    <span>{{ message.likes }}</span>
+                </b-button>
+                
+                <b-button type="button" class="btn-light" @click="like(message.id, '-1')" aria-label="j'aime pas">
+                    <b-icon-hand-thumbs-down class="mr-1"></b-icon-hand-thumbs-down>
+                    <span>{{ message.dislikes }}</span>
+                </b-button>
+                
+                <b-icon-chat-square class="mr-1 ml-3"></b-icon-chat-square>
                 <span>{{ message.comments }}</span>
             </div>
 
-            <div>
-                <router-link class="text-dark" :to="{ name: 'MessageDetails', params: { id: message.id }}" aria-label="repondre">
-                    <b-icon-reply font-scale="1.2"></b-icon-reply>
+            <div class="d-flex align-items-center">
+                <router-link class="text-dark mr-1" :to="{ name: 'MessageDetails', params: { id: message.id }}" title="répondre" aria-label="repondre">
+                    <b-icon-reply font-scale="1.5"></b-icon-reply>
                 </router-link>
 
-                <b-icon-trash tabindex="0" class="ml-3" v-if="auth" @click="trash(message.id)" aria-label="supprimer"></b-icon-trash>
+                <b-button type="button" class="btn-light" v-if="auth" @click="trash(message.id)" aria-label="supprimer">
+                    <b-icon-trash></b-icon-trash>
+                </b-button>
             </div>
         </div>
         
@@ -89,9 +96,3 @@ export default {
     }
 }
 </script>
-
-<style lang="scss" scoped>
-.like {
-    cursor: pointer;
-}
-</style>

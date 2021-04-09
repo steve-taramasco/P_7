@@ -10,8 +10,10 @@
                 <p class="mb-0">{{ comment.content }}</p>
             </div>
             <div class="mt-1">
-                <time class="small">{{ comment.date }}</time>
-                <b-icon-trash tabindex="0" v-if="auth" class="ml-3" @click="trash(comment.id)" aria-label="supprimer"></b-icon-trash>
+                <span class="small">{{ comment.date }}</span>
+                <b-button type="button" class="border-0 btn-light btn-sm bg-transparent" v-if="auth" @click="trash(comment.id)" aria-label="supprimer">
+                    <b-icon-trash></b-icon-trash>
+                </b-button>
             </div>
         </div>
     </div>
@@ -49,3 +51,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.action {
+    cursor: pointer;
+}
+</style>

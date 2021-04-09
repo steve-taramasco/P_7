@@ -1,9 +1,9 @@
 <template>
-  <main role="main">
+  <main>
 
     <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Commentaires</h1>
 
-    <section role="region" class="message container" v-if="message">
+    <section class="message container" v-if="message">
       <message-details
       :message="message"
       ></message-details>
@@ -29,7 +29,7 @@
       <loading></loading>
     </div>
 
-    <section role="region" class="form fixed-bottom p-2 bg-white border-top">
+    <section class="form fixed-bottom p-2 bg-white border-top">
       <comment-form
       :messageId="id"
       ></comment-form>

@@ -1,5 +1,5 @@
 <template>
-    <main role="main" class="container">
+    <main class="container">
 
         <h1 class="h4 mb-4 p-2">Bienvenue !</h1>
 

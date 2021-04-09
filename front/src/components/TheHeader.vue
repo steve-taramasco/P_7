@@ -1,5 +1,5 @@
 <template>
-    <header class="mb-4" role="banner">
+    <header class="mb-4">
 
       <b-navbar toggleable="md" type="dark" variant="info">
         
@@ -9,7 +9,7 @@
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-        <b-collapse id="nav-collapse" is-nav class="justify-content-end" tag="nav" role="navigation" aria-label="main navigation">
+        <b-collapse id="nav-collapse" is-nav class="justify-content-end" tag="nav" aria-label="main navigation">
             <b-navbar-nav class="d-flex">
                 <li>
                     <router-link exact-active-class="active" class="nav-link font-weight-bold" to="/" aria-label="accueil">
@@ -22,7 +22,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link active-class="active" class="nav-link" to="/dashboard"  aria-label="profil">
+                    <router-link active-class="active" class="nav-link" to="/dashboard" aria-label="profil">
                         <b-avatar class="border" size="sm" :src="avatar"></b-avatar>
                     </router-link>
                 </li>

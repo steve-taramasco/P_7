@@ -1,9 +1,9 @@
 <template>
-<main role="main">
+<main>
 
     <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Qui sommes-nous..</h1>
 
-    <section role="region" class="about container">
+    <section class="about container">
         <b-card  bg-variant="light" title-tag="h2" class="mb-4">
             <b-card-text>
                 Notre entreprise, spécialisée dans la grande distribution, est en pleine expansion.
@@ -14,7 +14,7 @@
             <b-card-text>
                 Pour plus d'informations rendez-vous sur notre
                 <b-link class="font-weight-bold text-dark" href="#" title="groupomania.fr" aria-label="consulter notre site web">
-                  site web
+                    site web
                 </b-link>
             </b-card-text>
         </b-card>

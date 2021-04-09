@@ -1,63 +1,62 @@
 <template>
   
-    <main role="main">
-        <section role="region" class="container">
+    <main>
+        <section class="container">
             <b-tabs content-class="mt-3">
-                <b-tab :title-link-class="linkClass" title="Connexion" active>
 
-                    <b-form role="form" @submit="login">
-                        <b-form-group label-for="email1" label="email">
-                            <b-form-input id="email1" v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
+                <b-tab :title-link-class="linkClass" title="Connexion" active>
+                    <b-form @submit="login">
+                        
+                        <b-form-group label-align-sm="right" label-cols-sm="3" label-for="email" label="email :">
+                            <b-form-input id="email" v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
                             <b-form-invalid-feedback :state="isEmail">
                                 l'email doit être au format : exemple@email.com
                             </b-form-invalid-feedback>
                             <b-form-valid-feedback :state="isEmail"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-form-group label-for="pass1" label="mot de pass">
-                            <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
+                        <b-form-group label-align-sm="right" label-cols-sm="3" label-for="pass" label="mot de pass :">
+                            <b-form-input id="pass" v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
                             <b-form-invalid-feedback :state="isPass">
                                 "lettre et/ou chiffre" 5 caractères min. 
                             </b-form-invalid-feedback>
                             <b-form-valid-feedback :state="isPass"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-button class="col-12 col-md-auto" type="submit" variant="primary">Connexion</b-button>
+                        <b-button class="col-12 col-sm-auto" type="submit" variant="primary">Connexion</b-button>
                     </b-form>
                 </b-tab>
 
                 <b-tab :title-link-class="linkClass" title="Incription">
-
-                    <b-form role="form" @submit="signup">
-                        
-                        <b-form-group>
-                            <b-form-input v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
+                    <b-form @submit="signup">
+                        <b-form-group label-align-sm="right" label-cols-sm="3" label-for="email2" label="email :">
+                            <b-form-input id="email2" v-model.trim="form.email" type="email" placeholder="email" :state="isEmail" aria-required="true"></b-form-input>
                             <b-form-invalid-feedback :state="isEmail">
                                 l'email doit être au format : exemple@email.com
                             </b-form-invalid-feedback>
                             <b-form-valid-feedback :state="isEmail"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-form-group>
-                            <b-form-input v-model.trim="form.username" type="text" placeholder="username" :state="isValid" aria-required="true"></b-form-input>
+                        <b-form-group label-align-sm="right" label-cols-sm="3" label-for="username" label="username :">
+                            <b-form-input id="username" v-model.trim="form.username" type="text" placeholder="username" :state="isValid" aria-required="true"></b-form-input>
                             <b-form-invalid-feedback :state="isValid">
                                 "lettre et/ou chiffre" 5 caractères min.  
                             </b-form-invalid-feedback>
                             <b-form-valid-feedback :state="isValid"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-form-group>
-                            <b-form-input v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
+                        <b-form-group label-align-sm="right" label-cols-sm="3" label-for="pass2" label="mot de pass :">
+                            <b-form-input id="pass2" v-model.trim="form.password" type="password" placeholder="password" :state="isPass" aria-required="true"></b-form-input>
                             <b-form-invalid-feedback :state="isPass">
                                 "lettre et/ou chiffre" 5 caractères min. 
                             </b-form-invalid-feedback>
                             <b-form-valid-feedback :state="isPass"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-button class="col-12 col-md-auto" type="submit" variant="primary">Inscription</b-button>
-
+                        <b-button class="col-12 col-sm-auto" type="submit" variant="primary">Inscription</b-button>
                     </b-form>
                 </b-tab>
+
             </b-tabs>
         </section>
     </main>
@@ -95,7 +94,7 @@ export default {
         },
 
         linkClass() {
-          return 'font-weight-bold'
+          return 'text-dark'
         },
     },
 
