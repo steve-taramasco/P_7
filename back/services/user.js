@@ -7,10 +7,12 @@ const dotenv = require('dotenv').config();
 exports.signup = async (body) => {
     const email_valid = /^[\w._-]+@[\w._-]+\.[a-z]{2,6}$/i;
     const pass_valid  = /^[\w._-]{5,}/i;
+    const user_valid = /^[\w\s-]{5,15}$/i;
 
     try {
-        if (email_valid.test(body.email) && pass_valid.test(body.password)
-            && body.username.length >= 4 && body.username.length < 20) {
+        if (email_valid.test(body.email) &&
+            pass_valid.test(body.password) &&
+            user_valid.test(body.username)) {
 
             const pass_hash =  await bcrypt.hash( body.password, 10 );
             const user = await models.User.create({ ...body, password: pass_hash });
@@ -73,6 +75,8 @@ exports.modify = async (req) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.USER_TOKEN);
     const userId = decodedToken.userId;
+    const email_valid = /^[\w._-]+@[\w._-]+\.[a-z]{2,6}$/i;
+    const text_valid = /^[\w\sÜ-ü,!?-_]{5,}/i;
 
     try {
         const user = await models.User.findOne({ where: { id: userId }});
@@ -83,6 +87,10 @@ exports.modify = async (req) => {
 
         if (!user) {
             throw 'error: unable to verify user';
+        }
+
+        if(!text_valid.test(data.bio) || !text_valid.test(data.username) || !email_valid.test(data.email)) {
+            throw 'error: invalid entries';
         }
 
         if (data.avatar && user.avatar) {

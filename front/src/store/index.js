@@ -69,7 +69,7 @@ export default new Vuex.Store({
         headers: { "Authorization" : `Bearer ${ context.state.token }` }
       })
       .then((res) => context.commit('STORE_USER', res.data.user))
-      .catch(error => console.log(error))  
+      .catch(error => context.commit('STORE_ERROR', error)) 
     },
 
     getMessages(context) {
@@ -78,7 +78,7 @@ export default new Vuex.Store({
         headers: { "Authorization" : `Bearer ${ context.state.token }` }
       })
       .then((res) => context.commit('STORE_MESSAGES', res.data.messages))
-      .catch(error => console.log(error))  
+      .catch(error => context.commit('STORE_ERROR', error))
     },
 
     getMessage(context, payload) {
@@ -87,7 +87,7 @@ export default new Vuex.Store({
         headers: { "Authorization" : `Bearer ${ context.state.token }` }
       })
       .then((res) => context.commit('STORE_MESSAGE', res.data.message))
-      .catch(error => console.log(error))  
+      .catch(error => context.commit('STORE_ERROR', error))
     }
 
   },

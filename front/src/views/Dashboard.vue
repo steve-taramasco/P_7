@@ -120,13 +120,13 @@ export default {
         },
 
         isUsername() {
-            const isValid  = /^[\w\s]{5,}/i;
-            return isValid.test(this.user.username)
+            const text_valid = /^[\w\s.',-]{5,}$/i
+            return text_valid.test(this.user.username)
         },
 
         isBio() {
-            const isBio  = /^[\w\sÜ-ü,!?-_']{5,}/i;
-            return isBio.test(this.user.bio)
+            const text_valid = /^[\w\sÜ-ü,!?-_]{5,}/i;
+            return text_valid.test(this.user.bio)
         },
 
         isPass() {

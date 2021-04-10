@@ -33,20 +33,13 @@ exports.createMessage = async (req) => {
 }
 
 exports.getMessages = async (req) => {
-    // const fields = req.query.fields;
-    // const limit   = parseInt(req.query.limit);
-    // const offset  = parseInt(req.query.offset);
-    // const order   = req.query.order;
-    let messages = [];
-
+   
     try {
 
+        let messages = [];
+
         const data = await models.Message.findAll({
-            // attributes: (fields && fields.split(',')) || null,
-            // order: [(order && order.split(':')) || ['createdAt', 'ASC']],
             order: [['createdAt', 'DESC']],
-            // limit: (!isNaN(limit) && limit || null),
-            // offset: (!isNaN(offset) && offset || null),
             include: [
                 {
                     model: models.User,

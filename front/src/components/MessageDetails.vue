@@ -24,12 +24,12 @@
         
         <div class="d-flex align-items-center justify-content-between border-top pt-1">
             <div class="d-flex align-items-center">
-                <b-button type="button" class="btn-light" @click="like(message.id, '1')" aria-label="j'aime">
+                <b-button type="button" class="btn-sm btn-light" @click="like(message.id, '1')" aria-label="j'aime">
                     <b-icon-hand-thumbs-up class="mr-1"></b-icon-hand-thumbs-up>
                     <span>{{ message.likes }}</span>
                 </b-button>
                 
-                 <b-button type="button" class="btn-light" @click="like(message.id, '-1')" aria-label="j'aime pas">
+                 <b-button type="button" class="btn-sm btn-light" @click="like(message.id, '-1')" aria-label="j'aime pas">
                     <b-icon-hand-thumbs-down class="mr-1"></b-icon-hand-thumbs-down>
                     <span>{{ message.dislikes }}</span>
                 </b-button>

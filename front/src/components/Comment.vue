@@ -51,9 +51,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.action {
-    cursor: pointer;
-}
-</style>

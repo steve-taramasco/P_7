@@ -1,6 +1,5 @@
 // Imports
 const express       = require('express');
-const bodyParser    = require('body-parser');
 const helmet        = require('helmet');
 const path          = require('path');
 const userRoutes    = require('./routes/user');
@@ -18,8 +17,8 @@ app.use((req, res, next) => {
 });
 
 // Configuration 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(helmet());
 
 // Routes

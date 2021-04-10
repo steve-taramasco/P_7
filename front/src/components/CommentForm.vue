@@ -23,6 +23,11 @@ import axios from 'axios'
 export default {
     name: "CommentForm",
     props: ['messageId'],
+    data () {
+        return {
+            comment: null,
+        }
+    },
 
     computed: {
         ...mapState(['token'])
@@ -42,12 +47,6 @@ export default {
             .then(() => { this.comment = null, this.getMessage(this.messageId)})
             .catch(error => console.log(error));   
         }
-    },
-
-    data () {
-        return {
-            comment: null,
-        }
-    },
+    }
 }
 </script>
