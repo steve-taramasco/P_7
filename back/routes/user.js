@@ -12,6 +12,4 @@ router.put('/me', multer, auth, userCtrl.modify);
 router.delete('/me', auth, userCtrl.delete);
 router.get('/me', auth, userCtrl.getUser);
 
-router.get('/', auth, userCtrl.getUsers);
-
 module.exports = router;

@@ -2,7 +2,7 @@
 
     <b-form class="container d-flex flex-wrap justify-content-center">
 
-        <label class="sr-only" for="message">message</label>
+        <label class="sr-only" for="message">écrire un message</label>
 
         <b-form-input
         id="message"
@@ -25,7 +25,7 @@
         @change="onFileChange"
         />
 
-        <b-button class="h-100 col-sm-2 font-weight-bold" variant="primary" @click="send">Envoyer</b-button>
+        <b-button class="h-100 col-sm-2 font-weight-bold p-1" style="font-size: larger" variant="primary" @click="send">Envoyer</b-button>
 
     </b-form>
 

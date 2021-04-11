@@ -1,7 +1,7 @@
 <template>
      <b-form class="container d-flex flex-wrap justify-content-center">
 
-        <label class="sr-only" for="message">message</label>
+        <label class="sr-only" for="message">écrire un commentaire</label>
 
         <b-form-input
         id="message"
@@ -11,7 +11,7 @@
         class="col-12 col-sm-9 mr-sm-2 mb-2"
         ></b-form-input>
 
-        <b-button class="h-100 col-sm-2" variant="primary" @click="send">Envoyer</b-button>
+        <b-button class="h-100 col-sm-2 font-weight-bold p-1" style="font-size: larger" variant="primary" @click="send">Envoyer</b-button>
 
     </b-form>
 </template>

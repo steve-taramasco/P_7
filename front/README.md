@@ -2,10 +2,16 @@
 
 ## Project setup
 ```
-npm install
-```
+Après avoir cloné le projet, déplacez-vous dans le dossier "front" en exécutant la commande cd front,
 
-### Compiles and hot-reloads for development
+exécuter ensuite la commande npm install (afin d'installer toutes les dépendances nécessaire).
+
 ```
-npm run serve
+## compile and start server
+
+```
+éxecuter la commande npm run serve,
+
+Après compilation l'application sera lancée sur le port 8080 (défaut).
+
 ```

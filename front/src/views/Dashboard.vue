@@ -45,8 +45,8 @@
                                     <b-form-textarea id="bio" type="text" :value="user.bio" rows="3" max-rows="6" :state="isBio" @input="updateBio"></b-form-textarea>
                                 </b-form-group>
 
-                                <b-button class="col-12 col-md-4 m-1 ml-md-3 font-weight-bold" type="reset" variant="danger" aria-label="annuler">Annuler</b-button>
-                                <b-button class="col-12 col-md-4 m-1 font-weight-bold" type="submit" variant="success" aria-label="appliquer">Appliquer</b-button>
+                                <b-button class="col-12 col-md-4 m-1 ml-md-3 font-weight-bold btn-lg" type="reset" variant="danger" aria-label="annuler">Annuler</b-button>
+                                <b-button class="col-12 col-md-4 m-1 font-weight-bold btn-lg" type="submit" variant="success" aria-label="appliquer">Appliquer</b-button>
                                 
                             </b-form>
                         </b-col>
@@ -69,14 +69,14 @@
                         <b-form-input id="pass2" type="password" v-model.trim="confirm" :state="isConfirm" required></b-form-input>
                     </b-form-group>
 
-                    <b-button class="col-12 col-md-auto font-weight-bold" type="submit" variant="success">Appliquer</b-button>
+                    <b-button class="col-12 col-md-auto font-weight-bold btn-lg" type="submit" variant="success">Appliquer</b-button>
 
                 </b-form>
             </b-tab>
 
             <b-tab :title-link-class="linkClass" title="Déconnexion">
-                <b-button class="col-12 col-md-5 m-1 font-weight-bold" variant="warning" @click="logout">Se déconnecter</b-button>
-                <b-button class="col-12 col-md-5 m-1 font-weight-bold" variant="danger" @click="deleted">Supprimer mon compte</b-button>
+                <b-button class="col-12 col-md-5 m-1 font-weight-bold btn-lg" variant="warning" @click="logout">Se déconnecter</b-button>
+                <b-button class="col-12 col-md-5 m-1 font-weight-bold btn-lg" variant="danger" @click="deleted">Supprimer mon compte</b-button>
             </b-tab>
         </b-tabs>
     </section>

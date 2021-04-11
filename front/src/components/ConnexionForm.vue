@@ -1,6 +1,8 @@
 <template>
   
     <main>
+
+        <h1 class="border-bottom bg-white h4 mb-4 p-2 sticky-top">Connectez-vous pour utiliser nos services...</h1>
         <section class="container">
             <b-tabs content-class="mt-3">
 
@@ -23,7 +25,7 @@
                             <b-form-valid-feedback :state="isPass"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-button class="col-12 col-sm-auto" type="submit" variant="primary">Connexion</b-button>
+                        <b-button class="col-12 col-sm-auto font-weight-bold btn-lg" type="submit" variant="success">Connexion</b-button>
                     </b-form>
                 </b-tab>
 
@@ -61,7 +63,7 @@
                             <b-form-valid-feedback :state="isConfirm"></b-form-valid-feedback>
                         </b-form-group>
 
-                        <b-button class="col-12 col-sm-auto" type="submit" variant="primary">Inscription</b-button>
+                        <b-button class="col-12 col-sm-auto font-weight-bold btn-lg" type="submit" variant="success">Inscription</b-button>
                     </b-form>
                 </b-tab>
 

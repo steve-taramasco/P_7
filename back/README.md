@@ -2,10 +2,16 @@
 
 ## Project setup
 ```
-npm install
-```
+Après avoir cloné le projet, déplacez-vous dans le dossier "back" en exécutant la commande cd back,
 
-### start server
+exécuter ensuite la commande npm install (afin d'installer toutes les dépendances nécessaire).
+
 ```
-node server
+## start server
+
+```
+Démarrer le serveur en executant la commande node server,
+
+une fois démarrer le serveur sera lancée sur le port 3000 (défaut).
+
 ```

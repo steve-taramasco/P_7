@@ -26,13 +26,3 @@ exports.postLike = async (req) => {
         throw Error(e)
     }
 }
-
-exports.getLikes = async (id) => {
-
-    try {
-       return await models.Like.findAll({ where: { messageId: id }});
-    }
-    catch(e) {
-        throw Error(e)
-    }
-}

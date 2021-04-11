@@ -1,6 +1,4 @@
 const userService = require('../services/user');
-const models      = require('../models');
-
 
 exports.signup = (req, res, next) => {
     userService.signup(req.body)
@@ -32,12 +30,6 @@ exports.delete = (req, res, next) => {
 exports.getUser = (req, res, next) => {
     userService.account(req)
     .then(user => res.status(200).json({ user }))
-    .catch(error => res.status(500).json({ error: error.message }));
-}
-
-exports.getUsers = (req, res, next) => {
-    models.User.findAll()
-    .then(users => res.status(200).json({ users }))
     .catch(error => res.status(500).json({ error: error.message }));
 }
 
