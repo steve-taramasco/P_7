@@ -35,8 +35,6 @@ USER_TOKEN=secret_token
 - demarrer le serveur en executant la commande `node server` depuis le dossier back.
 - demarrer la compilation et le server en executant la commande `npm run serve` depuis le dossier front.
 
-## API
-[Consulter la documentation de l'api](https://github.com/steve-taramasco/groupomania/api.pdf)
 ## Technlogies utilisées :
 
 Backend :
