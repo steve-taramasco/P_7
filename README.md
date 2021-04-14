@@ -10,7 +10,7 @@ Création d'un réseau social d'entreprise pour le client **Groupomania** afin d
 
 Pour l'utilisation du projet il faut au préalable :  
 - une base de donnée MySQL,  
-- un Navigateur récent.
+- un Navigateur récent (Chome 89, Firefox 87, Safar 14)
 
 ### Installation
 
@@ -38,11 +38,13 @@ USER_TOKEN=secret_token
 ## Technlogies utilisées :
 
 Backend :
-> nodeJs,  
-> express 
+> NodeJs,  
+> Express,
+> Séquelize
 
 Frontend :
-> Vue.js
+> Vue.js,
+> Bootstrap
 
 Base de données :
 > MySQL
