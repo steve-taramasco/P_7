@@ -39,11 +39,11 @@ USER_TOKEN=secret_token
 
 Backend :
 > NodeJs,  
-> Express,
+> Express,  
 > Séquelize
 
 Frontend :
-> Vue.js,
+> Vue.js,  
 > Bootstrap
 
 Base de données :
