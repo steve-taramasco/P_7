@@ -10,7 +10,7 @@ Création d'un réseau social d'entreprise pour le client **Groupomania** afin d
 
 Pour l'utilisation du projet il faut au préalable :  
 - une base de donnée MySQL,  
-- un Navigateur récent (Chome 89, Firefox 87, Safar 14)
+- un Navigateur récent (Chome 89, Firefox 87, Safari 14)
 
 ### Installation
 
